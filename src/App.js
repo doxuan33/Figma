@@ -160,13 +160,13 @@ function App() {
         {
           id: 1,
           tieu_de: "Mẫu PowerPoint Lịch sử",
-          duong_dan_anh_nho: "/img/mock_ppt1.jpg",
+          duong_dan_anh_nho: "/img/ppt1.png",
           la_pro: false,
         },
         {
           id: 2,
           tieu_de: "Mẫu PowerPoint Giáo dục",
-          duong_dan_anh_nho: "/img/mock_ppt2.jpg",
+          duong_dan_anh_nho: "/img/ppt2.png",
           la_pro: true,
         },
       ];
@@ -276,12 +276,12 @@ function App() {
                         </div>
                         <div style={{ margin: "10px 0" }}>
                           <img
-                            src="/img/avatar.png"
+                            src="https://png.pngtree.com/png-clipart/20200701/original/pngtree-cat-default-avatar-png-image_5416936.jpg"
                             alt="Avatar"
                             style={{ borderRadius: "50%", width: "50px", height: "50px", cursor: "pointer" }}
                             loading="lazy"
                             onClick={handleUserClick}
-                            onError={(e) => (e.target.src = "/img/fallback-avatar.png")}
+                            onError={(e) => (e.target.src = "https://png.pngtree.com/png-clipart/20200701/original/pngtree-cat-default-avatar-png-image_5416936.jpg")}
                           />
                           <h3 style={{ margin: "5px 0", fontSize: "16px" }}>{user.ten}</h3>
                           <p style={{ margin: "0", fontSize: "12px", color: "#666" }}>

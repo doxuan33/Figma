@@ -99,17 +99,17 @@ const VIPPage = () => {
 
   const blogs = [
     {
-      img: "/img/blog1.png",
+      img: "https://js.pngtree.com/a4/static/1gtrjrq.a76fff00.png",
       alt: "Blog 1",
       description: "Đội ngũ thiết kế độc quyền đông đảo",
     },
     {
-      img: "/img/blog2.png",
+      img: "https://js.pngtree.com/a4/static/iqtcld.153b81b2.png",
       alt: "Blog 2",
       description: "Hiệp định PRF cho giấy phép thương mại",
     },
     {
-      img: "/img/blog3.png",
+      img: "https://js.pngtree.com/a4/static/gjckia.325a0204.png",
       alt: "Blog 3",
       description: "Tải xuống không giới hạn tài nguyên hình ảnh đa thể loại",
     },
