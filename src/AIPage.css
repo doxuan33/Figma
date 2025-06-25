@@ -1,0 +1,297 @@
+/* Container chính */
+.ai-page-container {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 155px;
+}
+
+/* Tiêu đề và mô tả */
+.ai-page-container h1 {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 700;
+  color: #1f2937; /* text-gray-800 */
+  margin-bottom: 0.5rem;
+}
+
+.ai-page-container p {
+  color: #6b7280; /* text-gray-500 */
+  margin-bottom: 1.5rem;
+}
+
+/* Ô nhập liệu và nút Tải lên */
+.ai-page-container .relative {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.ai-page-container input[type="text"] {
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.ai-page-container input[type="text"]:focus {
+  border-color: #3b82f6; /* focus:ring-blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+.upload-button {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  color: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s;
+}
+
+.upload-button:hover {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+}
+
+/* Thông báo lỗi */
+.ai-page-container .bg-red-100 {
+  background-color: #fee2e2;
+  color: #dc2626; /* text-red-700 */
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Phần tùy chọn (Options Section) */
+.options-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.options-section label {
+  font-weight: 600;
+  color: #374151; /* text-gray-700 */
+}
+
+.options-section select {
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 6px;
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  color: #374151;
+  background: white;
+  appearance: none;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjYgOSAxMiAxNSAxOCA5Ij48L3BvbHlsaW5lPjwvc3ZnPg==');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.options-section select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.options-section button {
+  border: 1px solid #d1d5db;
+  border-radius: 9999px; /* rounded-full */
+  padding: 6px 16px;
+  font-size: 14px;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.options-section button:hover {
+  background-color: #eff6ff; /* hover:bg-blue-50 */
+}
+
+.options-section button.bg-blue-500 {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.options-section button.bg-blue-500:hover {
+  background: #2563eb;
+}
+
+.generate-button {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.generate-button:hover {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+}
+
+.generate-button:disabled {
+  background: #9ca3af; /* disabled:bg-gray-400 */
+  cursor: not-allowed;
+}
+
+.toggle-checkbox {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background-color: #d1d5db; /* bg-gray-300 */
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-checkbox:checked {
+  background-color: #3b82f6;
+}
+
+.toggle-checkbox::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggle-checkbox:checked::after {
+  transform: translateX(20px);
+}
+
+/* Phần hiển thị ảnh */
+.ai-page-container h2 {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600;
+  color: #374151; /* text-gray-700 */
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  place-items: center;
+}
+
+.grid p {
+  color: #6b7280; /* text-gray-500 */
+  text-align: center;
+  width: 100%;
+}
+
+.generated-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: var(--aspect-ratio, 1 / 1); /* Tùy chỉnh tỷ lệ khung hình */
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.generated-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.generated-image-container button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #3b82f6;
+  color: white;
+  padding: 6px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.generated-image-container button:hover {
+  background: #2563eb;
+}
+
+.generated-image-container button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Nút Tìm ngẫu nhiên và Tìm tương tự */
+.ai-page-container .flex.mt-3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.ai-page-container .flex.mt-3 button {
+  color: #3b82f6; /* text-blue-500 */
+  border: 1px solid #3b82f6; /* border-blue-500 */
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ai-page-container .flex.mt-3 button:hover {
+  background-color: #eff6ff; /* hover:bg-blue-50 */
+}
+
+.ai-page-container .flex.mt-3 button:disabled {
+  color: #9ca3af; /* disabled:text-gray-400 */
+  border-color: #9ca3af; /* disabled:border-gray-400 */
+  background: transparent;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ai-page-container {
+    padding: 1rem;
+  }
+
+  .options-section {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .options-section div {
+    width: 100%;
+  }
+
+  .options-section select, .options-section button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .generate-button {
+    width: 100%;
+  }
+}

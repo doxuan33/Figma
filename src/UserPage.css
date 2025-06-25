@@ -1,0 +1,485 @@
+/* General layout */
+.user-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  padding-top: 160px;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar-item i {
+  margin-right: 10px;
+}
+
+.sidebar-item:hover {
+  background-color: #e0e0e0;
+}
+
+.sidebar-item.active {
+  background-color: #55c5bae1;
+  color: white;
+}
+
+.sidebar-item.active i {
+  color: white;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile section */
+.profile {
+  max-width: 800px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.user-info .p-avatar {
+  margin-right: 20px;
+}
+
+.user-details h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.user-details p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.user-status {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.upgrade-btn {
+  background-color: #ff4d4f !important;
+  border: none !important;
+  margin-left: auto;
+}
+
+/* Social media buttons */
+.social-buttons {
+  margin-bottom: 30px;
+}
+
+.social-buttons h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.social-buttons .p-button {
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+/* User data and account info */
+.user-data,
+.account-info {
+  margin-bottom: 30px;
+}
+
+.user-data h4,
+.account-info h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.data-item label {
+  font-weight: bold;
+  color: #666;
+}
+
+.data-item p {
+  margin: 0;
+  color: #333;
+}
+
+/* Downloads section */
+.downloads h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  background-color: #e0e0e0 !important;
+  border: none !important;
+  color: #333 !important;
+  border-radius: 5px !important;
+}
+
+.filter-btn.active {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.download-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e6f4ea;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.download-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* Three columns: 2 parts for image info, 1 part for status, 1 part for permission */
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.download-image-info {
+  display: flex;
+  align-items: center;
+}
+
+.download-img {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+.download-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.download-info p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+.download-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.need-credit {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  transform: rotate(-15deg);
+}
+
+.download-permission {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.download-permission p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.permission-icon {
+  font-size: 16px;
+}
+
+.permission-icon.free {
+  color: #28a745;
+}
+
+.permission-icon.non-commercial {
+  color: #ff8c00;
+}
+.reviews .review-item {
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.review-user {
+  font-weight: bold;
+}
+
+.review-content {
+  margin: 5px 0;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.review-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.review-actions .p-button {
+  font-size: 14px;
+}
+
+.follow-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.follow-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.select-all-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.select-all-container span {
+  font-size: 14px;
+  color: #333;
+}
+
+.delete-selected-btn {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-selected-btn:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.delete-selected-btn:not(:disabled):hover {
+  background-color: #c82333;
+}
+
+.follow-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  background-color: #fff;
+  gap: 25px;
+}
+
+.follow-checkbox {
+  margin-right: 10px;
+}
+
+.follow-image-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.follow-img {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.follow-info h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.follow-info p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.follow-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-btn {
+  padding: 8px 16px;
+  background-color: #ff6200;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chat-btn:hover {
+  background-color: #e55b00;
+}
+
+.badge-free {
+  background: rgba(81, 187, 81, 0.801);
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.download-btn {
+  background: orange;
+  color: white;
+  border: none;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-favorite-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-favorite-btn:hover {
+  background: #c82333;
+}
+
+@media (max-width: 768px) {
+  .user-page {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .follow-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .follow-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .follow-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .follow-img {
+    width: 80px;
+    height: 50px;
+  }
+
+  .chat-btn,
+  .download-btn,
+  .remove-favorite-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .delete-selected-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .review-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .review-actions .p-button {
+    font-size: 12px;
+  }
+}
