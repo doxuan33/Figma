@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -32,7 +32,7 @@ const mockPackages = {
     id: 3,
     tieu_de: "Hình ảnh Pro",
     gia: 50000,
-    duong_dan_tap_tin: "/img/pro-image.jpg",
+    duong_dan_tap_tin: "/images/pro-image.jpg",
     type: "image",
   },
   4: {
@@ -58,8 +58,9 @@ const VIPcheckPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("method-1");
   const [showSuccess, setShowSuccess] = useState(false);
-  const [downloadLink, setDownloadLink] = useState("");
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(true);
+  const [agreeAutoRenew, setAgreeAutoRenew] = useState(true);
 
   const paymentMethodMap = {
     "method-1": "momo",
@@ -77,22 +78,32 @@ const VIPcheckPage = () => {
 
   // Mock user data
   useEffect(() => {
-    // Simulate fetching user
-    setUser(mockUser);
-    setPhoneNumber(mockUser.so_dien_thoai || "");
-    setLoadingUser(false);
+    try {
+      setUser(mockUser);
+      setPhoneNumber(mockUser.so_dien_thoai || "");
+      setLoadingUser(false);
+    } catch (err) {
+      console.error("Error loading user:", err);
+      setError("Không thể tải thông tin người dùng.");
+      setLoadingUser(false);
+    }
   }, []);
 
   // Mock package data
   useEffect(() => {
     if (!initialSelectedPackage && packageId) {
-      // Simulate fetching package by ID
-      const pkg = mockPackages[packageId];
-      if (pkg) {
-        setSelectedPackage(pkg);
-        setLoadingPackage(false);
-      } else {
-        setError("Không tìm thấy gói/tài nguyên với ID này!");
+      try {
+        const pkg = mockPackages[packageId];
+        if (pkg) {
+          setSelectedPackage(pkg);
+          setLoadingPackage(false);
+        } else {
+          setError("Không tìm thấy gói/tài nguyên với ID này!");
+          setLoadingPackage(false);
+        }
+      } catch (err) {
+        console.error("Error loading package:", err);
+        setError("Không thể tải thông tin gói/tài nguyên.");
         setLoadingPackage(false);
       }
     } else {
@@ -104,20 +115,31 @@ const VIPcheckPage = () => {
   const discount = selectedPackage?.ten_goi ? basePriceVND * 0.2 : 0;
   const totalPriceVND = basePriceVND - discount;
 
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10,11}$/;
+    return phoneRegex.test(phone);
+  };
+
   const handlePayment = async () => {
     try {
       setIsProcessingPayment(true);
       if (!selectedPackage) {
-        throw new Error("Không có thông tin gói/tài nguyên để thanh toán");
+        throw new Error("Không có thông tin gói/tài nguyên để thanh toán.");
       }
       if (!user) {
         throw new Error("Không có thông tin người dùng. Vui lòng đăng nhập lại.");
       }
       if (loadingPackage || loadingUser) {
-        throw new Error("Đang tải thông tin, vui lòng chờ");
+        throw new Error("Đang tải thông tin, vui lòng chờ.");
       }
       if (!Number.isFinite(basePriceVND) || basePriceVND <= 0) {
-        throw new Error("Giá mua gói/tài nguyên không hợp lệ");
+        throw new Error("Giá mua gói/tài nguyên không hợp lệ.");
+      }
+      if (!validatePhoneNumber(phoneNumber)) {
+        throw new Error("Số điện thoại không hợp lệ (10-11 số).");
+      }
+      if (!agreeTerms || !agreeAutoRenew) {
+        throw new Error("Vui lòng đồng ý với các điều khoản dịch vụ và gia hạn tự động.");
       }
 
       const backendPaymentMethod = paymentMethodMap[paymentMethod] || paymentMethod;
@@ -144,80 +166,36 @@ const VIPcheckPage = () => {
       );
 
       // Simulate payment processing
+      const simulatePayment = (delay) =>
+        new Promise((resolve) => setTimeout(resolve, delay));
+
       if (backendPaymentMethod === "momo") {
-        // Simulate MoMo payment redirect
-        setTimeout(() => {
-          setShowSuccess(true);
-          setTimeout(() => {
-            setShowSuccess(false);
-            navigate("/success", {
-              state: {
-                selectedPackage,
-                totalPriceVND,
-                basePriceVND,
-                discount,
-                downloadLink: selectedPackage.duong_dan_tap_tin,
-                transactionType,
-              },
-            });
-          }, 3000);
-        }, 2000);
+        await simulatePayment(2000);
       } else if (backendPaymentMethod === "paypal") {
-        // Simulate PayPal payment
-        setTimeout(() => {
-          setShowSuccess(true);
-          setTimeout(() => {
-            setShowSuccess(false);
-            navigate("/success", {
-              state: {
-                selectedPackage,
-                totalPriceVND,
-                basePriceVND,
-                discount,
-                downloadLink: selectedPackage.duong_dan_tap_tin,
-                transactionType,
-              },
-            });
-          }, 3000);
-        }, 5000);
+        await simulatePayment(5000);
       } else {
-        // Other payment methods
-        setTimeout(() => {
-          setShowSuccess(true);
-          if (selectedPackage.duong_dan_tap_tin) {
-            setDownloadLink(selectedPackage.duong_dan_tap_tin);
-          }
-          setTimeout(() => {
-            setShowSuccess(false);
-            navigate("/success", {
-              state: {
-                selectedPackage,
-                totalPriceVND,
-                basePriceVND,
-                discount,
-                downloadLink: selectedPackage.duong_dan_tap_tin,
-                transactionType,
-              },
-            });
-          }, 3000);
-        }, 2000);
+        await simulatePayment(2000);
       }
+
+      setShowSuccess(true);
+      await simulatePayment(3000);
+      setShowSuccess(false);
+      navigate("/success", {
+        state: {
+          selectedPackage,
+          totalPriceVND,
+          basePriceVND,
+          discount,
+          downloadLink: selectedPackage.duong_dan_tap_tin,
+          transactionType,
+        },
+      });
     } catch (err) {
       console.error("Handle Payment Error:", err);
       setError(err.message);
     } finally {
       setIsProcessingPayment(false);
     }
-  };
-
-  const downloadFile = (url, filename) => {
-    // Simulate file download
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename || `file_${Date.now()}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   if (loadingUser || loadingPackage) {
@@ -258,9 +236,9 @@ const VIPcheckPage = () => {
                       {basePriceVND.toLocaleString("vi-VN")} VNĐ
                     </div>
                   </div>
-                  <a href="#" className="payment-plan-change">
+                  <Link to="/vip" className="payment-plan-change">
                     Thay đổi
-                  </a>
+                  </Link>
                 </div>
                 <div className="payment-summary">
                   <div className="payment-summary-item">
@@ -302,17 +280,19 @@ const VIPcheckPage = () => {
                       <img
                         src={
                           method === "method-1"
-                            ? "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square-350x350.png"
+                            ? "/images/momo.png"
                             : method === "method-2"
-                            ? "https://js.pngtree.com/a5/static/li67rm.CR2j1tzS.png"
+                            ? "/images/visa.png"
                             : method === "method-3"
-                            ? "/img/paypal.png"
+                            ? "/images/paypal.png"
                             : method === "method-4"
-                            ? "https://static.vecteezy.com/system/resources/thumbnails/050/592/389/small_2x/google-pay-logo-transparent-background-free-png.png"
-                            : "https://js.pngtree.com/web3/images/ps_logos/pm_banktransfervn.png"
+                            ? "/images/google_pay.png"
+                            : "/images/bank_transfer.png"
                         }
                         alt={paymentMethodMap[method]}
                         className="payment-method-icon"
+                        loading="lazy"
+                        onError={(e) => (e.target.src = "/images/fallback-payment.png")}
                       />
                     </label>
                   </React.Fragment>
@@ -320,28 +300,8 @@ const VIPcheckPage = () => {
               </div>
 
               {showSuccess && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "0",
-                    left: "0",
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    zIndex: 1000,
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "white",
-                      padding: "20px",
-                      borderRadius: "10px",
-                      textAlign: "center",
-                    }}
-                  >
+                <div className="modal-overlay">
+                  <div className="modal-content">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="50"
@@ -352,12 +312,12 @@ const VIPcheckPage = () => {
                       <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 16.518L6.182 12.95a.75.75 0 111.068-1.05l3.818 3.818 6.682-6.682a.75.75 0 111.06 1.06l-7.432 7.432a.75.75 0 01-1.06 0z" />
                     </svg>
                     <h2>Thanh toán thành công!</h2>
-                    {downloadLink && (
+                    {selectedPackage.duong_dan_tap_tin && (
                       <div>
                         <p>Tải về tệp tài nguyên:</p>
-                        <a href={downloadLink} download className="download-link">
+                        <Link to={selectedPackage.duong_dan_tap_tin} download className="download-link">
                           Tải xuống ngay
-                        </a>
+                        </Link>
                       </div>
                     )}
                   </div>
@@ -365,22 +325,11 @@ const VIPcheckPage = () => {
               )}
 
               {isProcessingPayment && (
-                <div
-                  style={{
-                    position: "fixed",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "300px",
-                    backgroundColor: "#fff",
-                    padding: "20px",
-                    borderRadius: "10px",
-                    textAlign: "center",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-                    zIndex: 1000,
-                  }}
-                >
-                  <p className="text-gray-700">Đang xử lý thanh toán, vui lòng chờ...</p>
+                <div className="modal-overlay">
+                  <div className="modal-content">
+                    <p className="text-gray-700">Đang xử lý thanh toán, vui lòng chờ...</p>
+                    <div className="spinner" />
+                  </div>
                 </div>
               )}
 
@@ -428,11 +377,19 @@ const VIPcheckPage = () => {
               </div>
               <div className="payment-checkbox-group">
                 <label className="payment-checkbox">
-                  <input type="checkbox" defaultChecked />
+                  <input
+                    type="checkbox"
+                    checked={agreeAutoRenew}
+                    onChange={(e) => setAgreeAutoRenew(e.target.checked)}
+                  />
                   <span>Xem và đồng ý với "Thỏa thuận Gia hạn Thẻ Tín dụng/Tự động"</span>
                 </label>
                 <label className="payment-checkbox">
-                  <input type="checkbox" defaultChecked />
+                  <input
+                    type="checkbox"
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                  />
                   <span>Đồng ý với điều khoản dịch vụ</span>
                 </label>
               </div>
@@ -440,7 +397,7 @@ const VIPcheckPage = () => {
                 type="button"
                 className="payment-form-submit-button"
                 onClick={handlePayment}
-                disabled={isProcessingPayment}
+                disabled={isProcessingPayment || !agreeTerms || !agreeAutoRenew}
               >
                 {isProcessingPayment ? "Đang xử lý..." : "Xác nhận thanh toán"}
               </button>

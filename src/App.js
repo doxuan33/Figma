@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate, Link } from "react-router-dom";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import HomePage from "./HomePage";
@@ -31,7 +31,7 @@ const mockCategories = [
 const mockUser = {
   id: "82815496",
   ten: "Nguyễn Văn A",
-  thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z", // VIP valid until end of 2025
+  thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z",
 };
 
 function App() {
@@ -54,7 +54,6 @@ function App() {
 
   // Mock checking user login and VIP status
   useEffect(() => {
-    // Simulate user login with mock data
     const token = localStorage.getItem("token");
     if (token) {
       setUser(mockUser);
@@ -72,12 +71,12 @@ function App() {
 
   // Handle successful login
   const handleLoginSuccess = (userData) => {
-    localStorage.setItem("token", "mock-token"); // Simulate setting a token
-    setUser(userData || mockUser); // Use provided user data or fallback to mockUser
-    navigate("/user"); // Redirect to user page after login
+    localStorage.setItem("token", "mock-token");
+    setUser(userData || mockUser);
+    navigate("/user");
   };
 
-  // Mock search handler (simulating navigation with mock search results)
+  // Mock search handler
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!selectedCategory) {
@@ -101,18 +100,17 @@ function App() {
         }
       }
 
-      // Mock search results
       const mockSearchResults = [
         {
           id: 1,
           tieu_de: "Mẫu PowerPoint Lịch sử",
-          duong_dan_anh_nho: "/img/mock_ppt1.jpg",
+          duong_dan_anh_nho: "/images/mock_ppt1.jpg",
           la_pro: false,
         },
         {
           id: 2,
           tieu_de: "Mẫu PowerPoint Giáo dục",
-          duong_dan_anh_nho: "/img/mock_ppt2.jpg",
+          duong_dan_anh_nho: "/images/mock_ppt2.jpg",
           la_pro: true,
         },
       ];
@@ -181,9 +179,8 @@ function App() {
     navigate(`/ppt?category=${encodeURIComponent(category.ten)}`);
   };
 
-  // Check VIP status based on mock user data
   const isVIP = user?.thoi_gian_het_han_hoi_vien
-    ? new Date(user.thoi_gian_het_han_hoi_vien) > new Date("2025-06-25T17:14:00Z")
+    ? new Date(user.thoi_gian_het_han_hoi_vien) > new Date()
     : false;
 
   return (
@@ -200,9 +197,16 @@ function App() {
                 </div>
               </div>
               <div className="container-logo">
-                <img src={`/logo.png`} alt="Logo" width={50} height={50} className="logo" />
+                <img
+                  src="/images/logo.png"
+                  alt="Logo"
+                  width={50}
+                  height={50}
+                  className="logo"
+                  onError={(e) => (e.target.src = "/images/fallback-logo.png")} // Fallback image
+                />
                 <h1 className="logo">
-                  <a href="/">XPoint</a>
+                  <Link to="/">XPoint</Link>
                 </h1>
               </div>
               <div className="container-user">
@@ -223,7 +227,7 @@ function App() {
                 <OverlayPanel
                   ref={op}
                   style={{ width: "300px", fontFamily: "Arial, sans-serif" }}
-                  dismissable={false}
+                  dismissable={true} // Enable dismissable for better UX
                   onMouseEnter={() => setIsOverlayVisible(true)}
                   onMouseLeave={hideOverlay}
                 >
@@ -243,6 +247,7 @@ function App() {
                           alt="Avatar"
                           style={{ borderRadius: "50%", width: "50px", height: "50px", cursor: "pointer" }}
                           onClick={handleUserClick}
+                          onError={(e) => (e.target.src = "/images/fallback-avatar.png")} // Fallback avatar
                         />
                         <h3 style={{ margin: "5px 0", fontSize: "16px" }}>{user.ten}</h3>
                         <p style={{ margin: "0", fontSize: "12px", color: "#666" }}>
@@ -315,6 +320,7 @@ function App() {
                             width: "100%",
                             marginBottom: "10px",
                           }}
+                          onClick={() => navigate("/vip")}
                         />
                         <Button
                           label="Tham gia kế hoạch doanh nghiệp"
@@ -324,6 +330,7 @@ function App() {
                             border: "none",
                             width: "100%",
                           }}
+                          onClick={() => navigate("/vip")} // Add navigation
                         />
                       </div>
                       <div
@@ -340,7 +347,7 @@ function App() {
                             className="pi pi-user"
                             style={{ fontSize: "20px", display: "block" }}
                           ></i>
-                          <p style={{ margin: "5px 0 0" }}>Trung tâm cá nhân của tui</p>
+                          <p style={{ margin: "5px 0 0" }}>Trung tâm cá nhân</p>
                         </div>
                         <div style={{ textAlign: "center" }}>
                           <i
@@ -376,13 +383,13 @@ function App() {
             <nav className="navbar container">
               <i className="fa-solid fa-bars"></i>
               <ul className="menu">
-                <li><a href="/">XPOINT</a></li>
+                <li><Link to="/">XPOINT</Link></li>
                 <li
                   className="menu-item"
                   onMouseEnter={() => setShowDropdown(true)}
                   onMouseLeave={() => setShowDropdown(false)}
                 >
-                  <a href="/ppt">PowerPoint</a>
+                  <Link to="/ppt">PowerPoint</Link>
                   {showDropdown && (
                     <div
                       className="dropdown-menu"
@@ -393,15 +400,12 @@ function App() {
                         <ul className="dropdown-content">
                           {categories.map((category) => (
                             <li key={category.id}>
-                              <a
-                                href="/"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleCategoryClick(category);
-                                }}
+                              <Link
+                                to={`/ppt?category=${encodeURIComponent(category.ten)}`}
+                                onClick={() => handleCategoryClick(category)}
                               >
                                 <span className="text">{category.ten}</span>
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -411,9 +415,9 @@ function App() {
                     </div>
                   )}
                 </li>
-                <li><a href="/png">Hình ảnh</a></li>
-                <li><a href="/vip">Nâng cấp</a></li>
-                <li><a href="/ai">Công cụ AI</a></li>
+                <li><Link to="/png">Hình ảnh</Link></li>
+                <li><Link to="/vip">Nâng cấp</Link></li>
+                <li><Link to="/ai">Công cụ AI</Link></li>
               </ul>
               <form className="search-form" onSubmit={handleSearch}>
                 <div className="search-box">
@@ -458,26 +462,26 @@ function App() {
                   <li>Email: xpoint@support.com</li>
                 </ul>
                 <div className="social-icons">
-                  <span className="facebook"><i className="bx bxl-facebook"></i></span>
-                  <span className="twitter"><i className="bx bxl-twitter"></i></span>
-                  <span className="youtube"><i className="bx bxl-youtube"></i></span>
-                  <span className="pinterest"><i className="bx bxl-pinterest-alt"></i></span>
-                  <span className="instagram"><i className="bx bxl-instagram"></i></span>
+                  <a href="https://facebook.com" className="facebook"><i className="bx bxl-facebook"></i></a>
+                  <a href="https://twitter.com" className="twitter"><i className="bx bxl-twitter"></i></a>
+                  <a href="https://youtube.com" className="youtube"><i className="bx bxl-youtube"></i></a>
+                  <a href="https://pinterest.com" className="pinterest"><i className="bx bxl-pinterest-alt"></i></a>
+                  <a href="https://instagram.com" className="instagram"><i className="bx bxl-instagram"></i></a>
                 </div>
               </div>
               <div className="information">
                 <p className="title-footer">Thông tin</p>
                 <ul>
-                  <li><a href="/">Cung cấp thông tin</a></li>
-                  <li><a href="/">Chính trị riêng tư</a></li>
-                  <li><a href="/">Liên hệ</a></li>
+                  <li><Link to="/info">Cung cấp thông tin</Link></li>
+                  <li><Link to="/privacy">Chính trị riêng tư</Link></li>
+                  <li><Link to="/contact">Liên hệ</Link></li>
                 </ul>
               </div>
               <div className="my-account">
                 <p className="title-footer">Hiểu thêm</p>
                 <ul>
-                  <li><a href="/">Lịch sử của Xpoint</a></li>
-                  <li><a href="/">Danh sách mong muốn</a></li>
+                  <li><Link to="/history">Lịch sử của Xpoint</Link></li>
+                  <li><Link to="/wishlist">Danh sách mong muốn</Link></li>
                 </ul>
               </div>
               <div className="newsletter">
@@ -485,13 +489,17 @@ function App() {
                 <div className="content">
                   <p>Hãy đăng ký để theo dõi chúng tôi</p>
                   <input type="email" placeholder="Kết nối để biết thêm thông tin..." />
-                  <button>Đăng ký</button>
+                  <button type="button">Đăng ký</button>
                 </div>
               </div>
             </div>
             <div className="copyright">
               <p>Bản quyền của Đỗ Thị Xuân © 2025</p>
-              <img src="/img/payment.png" alt="Pagos" />
+              <img
+                src="/images/payment.png"
+                alt="Payment Methods"
+                onError={(e) => (e.target.src = "/images/fallback-payment.png")} // Fallback image
+              />
             </div>
           </div>
         </footer>

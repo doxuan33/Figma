@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -30,14 +30,17 @@ const mockPackages = [
 const VIPPage = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Mock data loading
   useEffect(() => {
-    // Simulate fetching packages
-    setPackages(mockPackages);
-    setLoading(false);
+    try {
+      setPackages(mockPackages);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error loading packages:", err);
+      setLoading(false);
+    }
   }, []);
 
   const handleBuyNow = (pkg) => {
@@ -48,24 +51,20 @@ const VIPPage = () => {
     return <div className="text-center mt-10 text-gray-700">Đang tải...</div>;
   }
 
-  if (error) {
-    return <div className="text-center mt-10 text-red-500">Lỗi: {error}</div>;
-  }
-
   const blogs = [
     {
-      img: "https://js.pngtree.com/a4/static/1gtrjrq.a76fff00.png",
-      alt: "Imagen Blog 1",
+      img: "/images/blog_1.png",
+      alt: "Blog 1",
       description: "Đội ngũ thiết kế độc quyền đông đảo",
     },
     {
-      img: "https://js.pngtree.com/a4/static/iqtcld.153b81b2.png",
-      alt: "Imagen Blog 2",
+      img: "/images/blog_2.png",
+      alt: "Blog 2",
       description: "Hiệp định PRF cho giấy phép thương mại",
     },
     {
-      img: "https://js.pngtree.com/a4/static/gjckia.325a0204.png",
-      alt: "Imagen Blog 3",
+      img: "/images/blog_3.png",
+      alt: "Blog 3",
       description: "Tải xuống không giới hạn tài nguyên hình ảnh đa thể loại",
     },
   ];
@@ -90,11 +89,11 @@ const VIPPage = () => {
               </li>
               <li className="flex items-center mb-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                90 ngày thử dùng với tài khoản miễn phí
+                90 ngày dùng thử với tài khoản miễn phí
               </li>
               <li className="flex items-center mb-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                Cáo phó
+                Tải xuống không giới hạn
               </li>
               <li className="flex items-center mb-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
@@ -120,7 +119,14 @@ const VIPPage = () => {
           {blogs.map((blog, index) => (
             <div className="card-blog" key={blog.alt}>
               <div className="container-img">
-                <img src={blog.img} alt={blog.alt} width={250} height={250} />
+                <img
+                  src={blog.img}
+                  alt={blog.alt}
+                  width={250}
+                  height={250}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-blog.png")}
+                />
                 <div className="button-group-blog">
                   <span>
                     <i className="bx bx-search-alt"></i>
@@ -132,7 +138,9 @@ const VIPPage = () => {
               </div>
               <div className="content-blog">
                 <p>{blog.description}</p>
-                <div className="btn-read-more">Đọc thêm</div>
+                <Link to="/about" className="btn-read-more">
+                  Đọc thêm
+                </Link>
               </div>
             </div>
           ))}

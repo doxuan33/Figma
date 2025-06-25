@@ -1,40 +1,40 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./App.css";
-import { useLocation, useNavigate } from "react-router-dom";
 
 // Mock data for PowerPoints
 const mockPowerpoints = [
   {
     id: 1,
     tieu_de: "Mẫu PowerPoint Lịch sử",
-    duong_dan_anh_nho: "/img/ppt1.png",
+    duong_dan_anh_nho: "/images/ppt1.png",
     mien_phi: true,
   },
   {
     id: 2,
     tieu_de: "Mẫu PowerPoint Giáo dục",
-    duong_dan_anh_nho: "/img/ppt2.png",
+    duong_dan_anh_nho: "/images/ppt2.png",
     mien_phi: false,
   },
   {
     id: 3,
     tieu_de: "Mẫu PowerPoint Kinh doanh",
-    duong_dan_anh_nho: "/img/ppt3.png",
+    duong_dan_anh_nho: "/images/ppt3.png",
     mien_phi: true,
   },
   {
     id: 4,
     tieu_de: "Mẫu PowerPoint Công nghệ",
-    duong_dan_anh_nho: "/img/ppt4.png",
+    duong_dan_anh_nho: "/images/ppt4.png",
     mien_phi: false,
   },
   {
     id: 5,
     tieu_de: "Mẫu PowerPoint Sáng tạo",
-    duong_dan_anh_nho: "/img/ppt5.png",
+    duong_dan_anh_nho: "/images/ppt5.png",
     mien_phi: true,
   },
 ];
@@ -44,36 +44,36 @@ const mockImages = [
   {
     id: 1,
     tieu_de: "Hình ảnh Lễ Giáng sinh",
-    duong_dan_anh_nho: "/img/noel-bg.png",
+    duong_dan_anh_nho: "/images/noel-bg.png",
     mien_phi: true,
   },
   {
     id: 2,
     tieu_de: "Hình ảnh Ẩm thực",
-    duong_dan_anh_nho: "/img/ad3.jpg",
+    duong_dan_anh_nho: "/images/ad3.jpg",
     mien_phi: true,
   },
   {
     id: 3,
     tieu_de: "Hình ảnh Quang cảnh",
-    duong_dan_anh_nho: "https://thuthuatnhanh.com/wp-content/uploads/2021/01/hinh-anh-sapa-dep-thung-lung-hung-vi.jpg",
+    duong_dan_anh_nho: "/images/sapa.jpg",
     mien_phi: false,
   },
   {
     id: 4,
     tieu_de: "Hình ảnh Động vật",
-    duong_dan_anh_nho: "https://img3.thuthuatphanmem.vn/uploads/2019/06/17/hinh-anh-dep-ngo-nghinh-ve-dong-vat_102855690.jpg",
+    duong_dan_anh_nho: "/images/animal.jpg",
     mien_phi: true,
   },
   {
     id: 5,
     tieu_de: "Hình ảnh Vườn hoa",
-    duong_dan_anh_nho: "https://antimatter.vn/wp-content/uploads/2022/06/anh-bau-troi-va-hoa.jpg",
+    duong_dan_anh_nho: "/images/flower.jpg",
     mien_phi: false,
   },
 ];
 
-// Mock data for Backgrounds (sử dụng cùng dữ liệu với Images để đơn giản hóa)
+// Mock data for Backgrounds
 const mockBackgrounds = mockImages;
 
 function HomePage() {
@@ -84,19 +84,20 @@ function HomePage() {
   const timeAutoNext = 7000;
 
   const [powerpoints, setPowerpoints] = useState([]);
-  const [images, setImages] = useState([]);
   const [backgrounds, setBackgrounds] = useState([]);
+  const [images, setImages] = useState([]);
+  const [loadingImages, setLoadingImages] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [loadingPowerpoints, setLoadingPowerpoints] = useState(true);
-  const [loadingImages, setLoadingImages] = useState(true);
   const [loadingBackgrounds, setLoadingBackgrounds] = useState(true);
-  const [carouselDirection, setCarouselDirection] = useState(""); // Quản lý hướng chuyển động
+  const [carouselDirection, setCarouselDirection] = useState("");
+  const [isSliding, setIsSliding] = useState(false); // Prevent multiple clicks
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const searchQuery = location.state?.searchQuery;
-  const searchResults = location.state?.searchResults;
+  const searchQuery = location.state?.searchQuery || "";
+  const searchResults = location.state?.searchResults || [];
 
   // Load favorites from localStorage
   useEffect(() => {
@@ -118,62 +119,56 @@ function HomePage() {
 
   // Mock data loading
   useEffect(() => {
-    if (searchResults && searchQuery) {
+    if (searchResults.length > 0 && searchQuery) {
       const isPowerpointSearch = location.state?.selectedCategory?.value === 1;
       const isImageSearch = location.state?.selectedCategory?.value === 2;
 
       if (isPowerpointSearch) {
         setPowerpoints(searchResults.slice(0, 5));
-        setLoadingPowerpoints(false);
         setImages(mockImages);
         setBackgrounds(mockBackgrounds);
-        setLoadingImages(false);
-        setLoadingBackgrounds(false);
       } else if (isImageSearch) {
         setImages(searchResults.slice(0, 5));
         setBackgrounds(searchResults.slice(0, 8));
-        setLoadingImages(false);
-        setLoadingBackgrounds(false);
         setPowerpoints(mockPowerpoints);
-        setLoadingPowerpoints(false);
       }
     } else {
-      // Load mock data
       setPowerpoints(mockPowerpoints);
       setImages(mockImages);
       setBackgrounds(mockBackgrounds);
-      setLoadingPowerpoints(false);
-      setLoadingImages(false);
-      setLoadingBackgrounds(false);
     }
-  }, [location.state, searchQuery]);
+    setLoadingPowerpoints(false);
+    setLoadingImages(false);
+    setLoadingBackgrounds(false);
+  }, [searchQuery, searchResults]);
 
   // Carousel functionality
   useEffect(() => {
     const nextButton = document.getElementById("next");
     const prevButton = document.getElementById("prev");
 
-    const handleNext = () => showSlider("next");
-    const handlePrev = () => showSlider("prev");
+    const handleNext = () => {
+      if (!isSliding) showSlider("next");
+    };
+    const handlePrev = () => {
+      if (!isSliding) showSlider("prev");
+    };
 
-    // Chỉ thêm sự kiện nếu các nút tồn tại
     if (nextButton && prevButton) {
       nextButton.addEventListener("click", handleNext);
       prevButton.addEventListener("click", handlePrev);
 
-      // Tự động chuyển slide
       const autoSlide = setInterval(() => {
-        showSlider("next");
+        if (!isSliding) showSlider("next");
       }, timeAutoNext);
 
-      // Cleanup khi component unmount
       return () => {
         nextButton.removeEventListener("click", handleNext);
         prevButton.removeEventListener("click", handlePrev);
         clearInterval(autoSlide);
       };
     }
-  }, []);
+  }, [isSliding]);
 
   const showSlider = (type) => {
     if (!carouselRef.current || !sliderRef.current || !thumbnailRef.current) {
@@ -189,6 +184,7 @@ function HomePage() {
       return;
     }
 
+    setIsSliding(true);
     if (type === "next") {
       sliderRef.current.appendChild(sliderItems[0]);
       thumbnailRef.current.appendChild(thumbnailItems[0]);
@@ -201,6 +197,7 @@ function HomePage() {
 
     setTimeout(() => {
       setCarouselDirection("");
+      setIsSliding(false);
     }, timeRunning);
   };
 
@@ -218,9 +215,10 @@ function HomePage() {
       const isFavorited = prevFavorites.some((fav) => fav.id === item.id);
       if (isFavorited) {
         return prevFavorites.filter((fav) => fav.id !== item.id);
-      } else {
+      } else if (prevFavorites.length < 50) { // Limit favorites to 50
         return [...prevFavorites, item];
       }
+      return prevFavorites;
     });
   };
 
@@ -236,27 +234,27 @@ function HomePage() {
 
   const blogs = [
     {
-      img: "/img/blog_1.png",
+      img: "/images/blog_1.png",
       alt: "Imagen Blog 1",
       title: "Bộ mẫu Microsoft",
       description:
-        "20,0000 mẫu Ứng dụng Microsoft 365 miễn phí và cao cấp bao gồm Word, Excel, Powerpoint.",
+        "20,000 mẫu Ứng dụng Microsoft 365 miễn phí và cao cấp bao gồm Word, Excel, Powerpoint.",
     },
     {
-      img: "/img/blog_2.png",
+      img: "/images/blog_2.png",
       alt: "Imagen Blog 2",
       title: "Bộ mẫu của Google",
       description:
         "Hỗ trợ các mẫu Google Workspace miễn phí và cao cấp trong Google Tài liệu, Trang tính, Trang trình bày.",
     },
     {
-      img: "/img/blog_3.png",
+      img: "/images/blog_3.png",
       alt: "Imagen Blog 3",
       title: "Bộ mẫu Adobe",
       description:
         "70,000+ mẫu đám mây sáng tạo adobe miễn phí và cao cấp trong photoshop, illustrator, indesign, pdf.",
     },
-  ];
+];
 
   return (
     <>
@@ -267,10 +265,12 @@ function HomePage() {
             {[1, 2, 3, 4].map((index) => (
               <div className="item" key={index}>
                 <img
-                  src={`/img/blog-${index}.png`}
+                  src={`/images/blog-${index}.png`}
                   alt={`Slide ${index}`}
                   width={800}
                   height={400}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-slide.png")}
                 />
                 <div className="content">
                   <div className="author">XPOINT</div>
@@ -281,8 +281,8 @@ function HomePage() {
                     Cập nhật hình ảnh, mẫu thuyết trình mới nhất
                   </div>
                   <div className="buttons">
-                    <button>XEM THÊM</button>
-                    <button>ĐĂNG KÝ</button>
+                    <button onClick={() => navigate("/ppt")}>XEM THÊM</button>
+                    <button onClick={() => navigate("/login")}>ĐĂNG KÝ</button>
                   </div>
                 </div>
               </div>
@@ -293,18 +293,24 @@ function HomePage() {
             {[1, 2, 3, 4].map((index) => (
               <div className="item" key={index}>
                 <img
-                  src={`/img/new-${index}.png`}
+                  src={`/images/new-${index}.png`}
                   alt={`Thumbnail ${index}`}
                   width={200}
                   height={100}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-thumbnail.png")}
                 />
               </div>
             ))}
           </div>
 
           <div className="arrows">
-            <button id="prev">&lt;</button>
-            <button id="next">&gt;</button>
+            <button id="prev" disabled={isSliding}>
+              &lt;
+            </button>
+            <button id="next" disabled={isSliding}>
+              &gt;
+            </button>
           </div>
         </div>
       </section>
@@ -312,18 +318,24 @@ function HomePage() {
       {/* Features */}
       <section className="container container-features">
         {[
-          { icon: "/img/feat-1.png", title: "Mẫu Powerpoint" },
-          { icon: "/img/feat-2.png", title: "Giáo dục" },
-          { icon: "/img/feat-3.png", title: "Việc Kinh Doanh" },
-          { icon: "/img/feat-4.png", title: "Tiếp Thị" },
-          { icon: "/img/feat-5.png", title: "Đa Mục đích" },
+          { icon: "/images/feat-1.png", title: "Mẫu Powerpoint", to: "/ppt" },
+          { icon: "/images/feat-2.png", title: "Giáo dục", to: "/ppt?category=Giáo dục" },
+          { icon: "/images/feat-3.png", title: "Việc Kinh Doanh", to: "/ppt?category=Kinh doanh" },
+          { icon: "/images/feat-4.png", title: "Tiếp Thị", to: "/ppt?category=Tiếp thị" },
+          { icon: "/images/feat-5.png", title: "Đa Mục đích", to: "/ppt?category=Đa mục đích" },
         ].map((feature, index) => (
-          <a href="/" className="card-feature" key={index}>
-            <img src={feature.icon} alt={feature.title} className="icon" />
+          <Link to={feature.to} className="card-feature" key={index}>
+            <img
+              src={feature.icon}
+              alt={feature.title}
+              className="icon"
+              loading="lazy"
+              onError={(e) => (e.target.src = "/images/fallback-feature.png")}
+            />
             <div className="feature-content">
               <span>{feature.title}</span>
             </div>
-          </a>
+          </Link>
         ))}
       </section>
 
@@ -347,7 +359,7 @@ function HomePage() {
           ) : powerpoints.length === 0 ? (
             <p>Không tìm thấy mẫu PowerPoint nào.</p>
           ) : (
-            powerpoints.map((ppt, index) => (
+            powerpoints.map((ppt) => (
               <div
                 className="card-category"
                 key={ppt.id}
@@ -357,6 +369,8 @@ function HomePage() {
                   src={ppt.duong_dan_anh_nho}
                   alt={ppt.tieu_de}
                   className="template-img"
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-ppt.png")}
                 />
                 <div className="overlay">
                   <i
@@ -381,32 +395,40 @@ function HomePage() {
       <section className="top-categories top">
         <h1 className="heading-1">Hình ảnh và bộ sưu tập</h1>
         <div className="container-categories">
-          {mockImages.map((category, index) => (
-            <div
-              className="card-category"
-              key={category.id}
-              onClick={() => handleItemClick(category, "image")}
-            >
-              <img
-                src={category.duong_dan_anh_nho}
-                alt={category.tieu_de}
-                className="template-img"
-              />
-              <div className="overlay">
-                <i
-                  className={`pi pi-heart${
-                    favorites.some((fav) => fav.id === category.id) ? "-fill" : ""
-                  } favorite-icon`}
-                  onClick={(e) => handleFavoriteClick(category, e)}
-                ></i>
-                {category.mien_phi && <span className="badge-free">Miễn phí</span>}
-                <button className="download-btn">
-                  <i className="bx bx-download"></i> Download
-                </button>
-                <p className="template-title">{category.tieu_de}</p>
+          {loadingImages ? (
+            <p>Đang tải dữ liệu...</p>
+          ) : images.length === 0 ? (
+            <p>Không tìm thấy hình ảnh nào.</p>
+          ) : (
+            images.map((category) => (
+              <div
+                className="card-category"
+                key={category.id}
+                onClick={() => handleItemClick(category, "image")}
+              >
+                <img
+                  src={category.duong_dan_anh_nho}
+                  alt={category.tieu_de}
+                  className="template-img"
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-image.png")}
+                />
+                <div className="overlay">
+                  <i
+                    className={`pi pi-heart${
+                      favorites.some((fav) => fav.id === category.id) ? "-fill" : ""
+                    } favorite-icon`}
+                    onClick={(e) => handleFavoriteClick(category, e)}
+                  ></i>
+                  {category.mien_phi && <span className="badge-free">Miễn phí</span>}
+                  <button className="download-btn">
+                    <i className="bx bx-download"></i> Download
+                  </button>
+                  <p className="template-title">{category.tieu_de}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 
@@ -430,7 +452,7 @@ function HomePage() {
           ) : backgrounds.length === 0 ? (
             <p>Không tìm thấy hình nền nào.</p>
           ) : (
-            backgrounds.slice(0, 4).map((bg, index) => (
+            backgrounds.slice(0, 4).map((bg) => (
               <div
                 className="card-category-1"
                 key={bg.id}
@@ -441,6 +463,8 @@ function HomePage() {
                   alt={bg.tieu_de}
                   width={350}
                   height={200}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-background.png")}
                 />
                 <div className="overlay">
                   <i
@@ -465,7 +489,7 @@ function HomePage() {
           ) : backgrounds.length <= 4 ? (
             <p>Không có thêm hình nền để hiển thị.</p>
           ) : (
-            backgrounds.slice(4, 8).map((bg, index) => (
+            backgrounds.slice(4, 8).map((bg) => (
               <div
                 className="card-category-1"
                 key={bg.id}
@@ -476,6 +500,8 @@ function HomePage() {
                   alt={bg.tieu_de}
                   width={350}
                   height={200}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-background.png")}
                 />
                 <div className="overlay">
                   <i
@@ -498,29 +524,22 @@ function HomePage() {
 
       {/* Gallery Section */}
       <section className="gallery">
-        <img
-          src="https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-4-1709.jpeg"
-          alt="Gallery Img1"
-          className="gallery-img-1"
-        />
-        <img
-          src="https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-3-825.jpeg"
-          alt="Gallery Img2"
-          className="gallery-img-2"
-        />
-        <img
-          src="https://ben.com.vn/tin-tuc/wp-content/uploads/2021/06/mau-power-point-dep-6.jpg"
-          alt="Gallery Img3"
-          className="gallery-img-3"
-        />
-        <img
-          src="https://img.thuthuattinhoc.vn/uploads/2019/02/01/slide-dep-cho-thuyet-trinh_101043422.jpg"
-          className="gallery-img-4"
-        />
-        <img
-          src="https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/cach-lam-Powerpoint-dep.png"
-          className="gallery-img-5"
-        />
+        {[
+          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-4-1709.jpeg",
+          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-3-825.jpeg",
+          "https://ben.com.vn/tin-tuc/wp-content/uploads/2021/06/mau-power-point-dep-6.jpg",
+          "https://img.thuthuattinhoc.vn/uploads/2019/02/01/slide-dep-cho-thuyet-trinh_101043422.jpg",
+          "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/cach-lam-Powerpoint-dep.png",
+        ].map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            alt={`Gallery Img${index + 1}`}
+            className={`gallery-img-${index + 1}`}
+            loading="lazy"
+            onError={(e) => (e.target.src = "/images/fallback-gallery.png")}
+          />
+        ))}
       </section>
 
       {/* Blogs Section */}
@@ -530,7 +549,12 @@ function HomePage() {
           {blogs.map((blog, index) => (
             <div className="card-blog" key={index}>
               <div className="container-img">
-                <img src={blog.img} alt={blog.alt} />
+                <img
+                  src={blog.img}
+                  alt={blog.alt}
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/images/fallback-blog.png")}
+                />
                 <div className="button-group-blog">
                   <span>
                     <i className="bx bx-search-alt"></i>
@@ -543,7 +567,9 @@ function HomePage() {
               <div className="content-blog">
                 <h3>{blog.title}</h3>
                 <p>{blog.description}</p>
-                <div className="btn-read-more">Đọc thêm</div>
+                <Link to="/about" className="btn-read-more">
+                  Đọc thêm
+                </Link>
               </div>
             </div>
           ))}
