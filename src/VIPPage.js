@@ -116,7 +116,7 @@ const VIPPage = () => {
           Hàng chục triệu người dùng đã tham gia Gói Premium Cá nhân của chúng tôi
         </h1>
         <div className="container-blogs">
-          {blogs.map((blog, index) => (
+          {blogs.map((blog) => (
             <div className="card-blog" key={blog.alt}>
               <div className="container-img">
                 <img
