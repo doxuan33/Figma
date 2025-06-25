@@ -449,25 +449,19 @@ function App() {
         <Route
           path="/user"
           element={
-            <PrivateRoute>
               <UserPage />
-            </PrivateRoute>
           }
         />
         <Route
           path="/vip"
           element={
-            <PrivateRoute>
               <VIPPage />
-            </PrivateRoute>
           }
         />
         <Route
           path="/checkout/:packageId"
           element={
-            <PrivateRoute>
               <VIPcheckPage />
-            </PrivateRoute>
           }
         />
         <Route path="/ai" element={<AIPage />} />

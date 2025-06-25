@@ -45,12 +45,23 @@ const mockUser = {
   thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z", // VIP valid until end of 2025
 };
 
+// Default item for /about page
+const defaultItem = {
+  id: 1,
+  tieu_de: "Mẫu PowerPoint Lịch sử",
+  duong_dan_anh_nho: "/img/ppt1.png",
+  duong_dan_tap_tin: "/files/ppt1.pptx",
+  la_pro: false,
+  gia: 0,
+  mo_ta: "Mẫu PowerPoint về lịch sử với thiết kế đơn giản và chuyên nghiệp.",
+};
+
 const PPTTemplate = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { powerpoint, image } = location.state || {};
-  const item = powerpoint || image;
-  const isPowerpoint = !!powerpoint;
+  const item = powerpoint || image || defaultItem; // Use defaultItem if no state
+  const isPowerpoint = !!powerpoint || !image; // Default to PowerPoint if no state
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [detailImages, setDetailImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,11 +74,10 @@ const PPTTemplate = () => {
 
   // Mock user check
   useEffect(() => {
-    // Simulate checking user membership status
     const token = localStorage.getItem("token");
     if (token && mockUser.thoi_gian_het_han_hoi_vien) {
       const expiryDate = new Date(mockUser.thoi_gian_het_han_hoi_vien);
-      const currentDate = new Date("2025-06-25T17:19:00+07:00"); // Current date
+      const currentDate = new Date("2025-06-26T01:00:00+07:00"); // Current date
       setIsMembershipValid(expiryDate > currentDate);
     } else {
       setIsMembershipValid(false);
@@ -77,22 +87,20 @@ const PPTTemplate = () => {
 
   // Mock data loading
   useEffect(() => {
-    if (item) {
-      // Set detail images
-      if (isPowerpoint) {
-        setDetailImages(mockDetailImages);
-      } else {
-        setDetailImages([{ src: item.duong_dan_anh_nho, alt: item.tieu_de }]);
-      }
-      setLoading(false);
-
-      // Set related PowerPoints and Backgrounds
-      setRelatedPowerpoints(mockRelatedPowerpoints);
-      setRelatedBackgrounds(mockRelatedBackgrounds);
-
-      // Set reviews
-      setReviews(mockReviews);
+    // Set detail images
+    if (isPowerpoint) {
+      setDetailImages(mockDetailImages);
+    } else {
+      setDetailImages([{ src: item.duong_dan_anh_nho, alt: item.tieu_de }]);
     }
+    setLoading(false);
+
+    // Set related PowerPoints and Backgrounds
+    setRelatedPowerpoints(mockRelatedPowerpoints);
+    setRelatedBackgrounds(mockRelatedBackgrounds);
+
+    // Set reviews
+    setReviews(mockReviews);
   }, [item, isPowerpoint]);
 
   // Hàm cuộn thumbnail sang trái
@@ -193,7 +201,7 @@ const PPTTemplate = () => {
               tieu_de: item.tieu_de,
               gia: item.gia || 0,
               type: isPowerpoint ? "powerpoint" : "image",
-              duong_dan_tep_tin: fileUrl,
+              duong_dan_tap_tin: fileUrl,
               duong_dan_anh_nho: fileUrl,
             },
           },
@@ -272,10 +280,6 @@ const PPTTemplate = () => {
       ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
       : 0;
 
-  if (!item) {
-    return <div>Không có dữ liệu nào được chọn.</div>;
-  }
-
   if (loadingUser) {
     return <div>Đang kiểm tra trạng thái tài khoản...</div>;
   }
@@ -316,13 +320,13 @@ const PPTTemplate = () => {
                       ❮
                     </button>
                     <div className="ppt-thumbnails" ref={thumbnailRef}>
-                      {detailImages.map((img, index) => (
+                      {detailImages.map((img) => (
                         <img
                           key={img.src}
                           src={img.src}
                           alt={img.alt}
-                          className={`ppt-thumbnail ${selectedIndex === index ? "active" : ""}`}
-                          onClick={() => setSelectedIndex(index)}
+                          className={`ppt-thumbnail ${selectedIndex === detailImages.findIndex((i) => i.src === img.src) ? "active" : ""}`}
+                          onClick={() => setSelectedIndex(detailImages.findIndex((i) => i.src === img.src))}
                         />
                       ))}
                     </div>
@@ -465,10 +469,10 @@ const PPTTemplate = () => {
             <span>{averageRating}</span>/5
           </div>
           <div className="stars">
-            {[...Array(5)].map((_, index) => (
+            {[...Array(5)].map((_, i) => (
               <i
-                key={index}
-                className={`bx ${index < Math.round(averageRating) ? "bxs-star" : "bx-star"}`}
+                key={i}
+                className={`bx ${i < Math.round(averageRating) ? "bxs-star" : "bx-star"}`}
               ></i>
             ))}
           </div>
@@ -479,8 +483,8 @@ const PPTTemplate = () => {
           {reviews.length === 0 ? (
             <p>Chưa có đánh giá nào.</p>
           ) : (
-            reviews.map((review, index) => (
-              <div key={index} className="review-item">
+            reviews.map((review) => (
+              <div key={review.user + review.date} className="review-item">
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
                   <div>
                     <span style={{ fontWeight: "bold" }}>{review.user}</span>
