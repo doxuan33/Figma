@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import LoginPage from "./LoginPage";
 import reportWebVitals from "./reportWebVitals";
 
 const PrivateRoute = ({ children }) => {
@@ -13,14 +12,9 @@ const PrivateRoute = ({ children }) => {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-    <div>
-        <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-      {/* document.getElementById('root') */}
-  </div>
-  </>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
 
 reportWebVitals();

@@ -10,31 +10,31 @@ const mockPowerpoints = [
   {
     id: 1,
     tieu_de: "Mẫu PowerPoint Lịch sử",
-    duong_dan_anh_nho: "/images/ppt1.png",
+    duong_dan_anh_nho: "/img/ppt1.png",
     mien_phi: true,
   },
   {
     id: 2,
     tieu_de: "Mẫu PowerPoint Giáo dục",
-    duong_dan_anh_nho: "/images/ppt2.png",
+    duong_dan_anh_nho: "/img/ppt2.png",
     mien_phi: false,
   },
   {
     id: 3,
     tieu_de: "Mẫu PowerPoint Kinh doanh",
-    duong_dan_anh_nho: "/images/ppt3.png",
+    duong_dan_anh_nho: "/img/ppt3.png",
     mien_phi: true,
   },
   {
     id: 4,
     tieu_de: "Mẫu PowerPoint Công nghệ",
-    duong_dan_anh_nho: "/images/ppt4.png",
+    duong_dan_anh_nho: "/img/ppt4.png",
     mien_phi: false,
   },
   {
     id: 5,
     tieu_de: "Mẫu PowerPoint Sáng tạo",
-    duong_dan_anh_nho: "/images/ppt5.png",
+    duong_dan_anh_nho: "/img/ppt5.png",
     mien_phi: true,
   },
 ];
@@ -44,31 +44,31 @@ const mockImages = [
   {
     id: 1,
     tieu_de: "Hình ảnh Lễ Giáng sinh",
-    duong_dan_anh_nho: "/images/noel-bg.png",
+    duong_dan_anh_nho: "/img/noel-bg.png",
     mien_phi: true,
   },
   {
     id: 2,
     tieu_de: "Hình ảnh Ẩm thực",
-    duong_dan_anh_nho: "/images/ad3.jpg",
+    duong_dan_anh_nho: "/img/ad3.jpg",
     mien_phi: true,
   },
   {
     id: 3,
     tieu_de: "Hình ảnh Quang cảnh",
-    duong_dan_anh_nho: "/images/sapa.jpg",
+    duong_dan_anh_nho: "/img/sapa.jpg",
     mien_phi: false,
   },
   {
     id: 4,
     tieu_de: "Hình ảnh Động vật",
-    duong_dan_anh_nho: "/images/animal.jpg",
+    duong_dan_anh_nho: "/img/animal.jpg",
     mien_phi: true,
   },
   {
     id: 5,
     tieu_de: "Hình ảnh Vườn hoa",
-    duong_dan_anh_nho: "/images/flower.jpg",
+    duong_dan_anh_nho: "/img/flower.jpg",
     mien_phi: false,
   },
 ];
@@ -234,21 +234,21 @@ function HomePage() {
 
   const blogs = [
     {
-      img: "/images/blog_1.png",
+      img: "/img/blog_1.png",
       alt: "Imagen Blog 1",
       title: "Bộ mẫu Microsoft",
       description:
         "20,000 mẫu Ứng dụng Microsoft 365 miễn phí và cao cấp bao gồm Word, Excel, Powerpoint.",
     },
     {
-      img: "/images/blog_2.png",
+      img: "/img/blog_2.png",
       alt: "Imagen Blog 2",
       title: "Bộ mẫu của Google",
       description:
         "Hỗ trợ các mẫu Google Workspace miễn phí và cao cấp trong Google Tài liệu, Trang tính, Trang trình bày.",
     },
     {
-      img: "/images/blog_3.png",
+      img: "/img/blog_3.png",
       alt: "Imagen Blog 3",
       title: "Bộ mẫu Adobe",
       description:
@@ -265,12 +265,12 @@ function HomePage() {
             {[1, 2, 3, 4].map((index) => (
               <div className="item" key={index}>
                 <img
-                  src={`/images/blog-${index}.png`}
+                  src={`/img/blog-${index}.png`}
                   alt={`Slide ${index}`}
                   width={800}
                   height={400}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-slide.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-slide.png")}
                 />
                 <div className="content">
                   <div className="author">XPOINT</div>
@@ -293,12 +293,12 @@ function HomePage() {
             {[1, 2, 3, 4].map((index) => (
               <div className="item" key={index}>
                 <img
-                  src={`/images/new-${index}.png`}
+                  src={`/img/new-${index}.png`}
                   alt={`Thumbnail ${index}`}
                   width={200}
                   height={100}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-thumbnail.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-thumbnail.png")}
                 />
               </div>
             ))}
@@ -318,11 +318,11 @@ function HomePage() {
       {/* Features */}
       <section className="container container-features">
         {[
-          { icon: "/images/feat-1.png", title: "Mẫu Powerpoint", to: "/ppt" },
-          { icon: "/images/feat-2.png", title: "Giáo dục", to: "/ppt?category=Giáo dục" },
-          { icon: "/images/feat-3.png", title: "Việc Kinh Doanh", to: "/ppt?category=Kinh doanh" },
-          { icon: "/images/feat-4.png", title: "Tiếp Thị", to: "/ppt?category=Tiếp thị" },
-          { icon: "/images/feat-5.png", title: "Đa Mục đích", to: "/ppt?category=Đa mục đích" },
+          { icon: "/img/feat-1.png", title: "Mẫu Powerpoint", to: "/ppt" },
+          { icon: "/img/feat-2.png", title: "Giáo dục", to: "/ppt?category=Giáo dục" },
+          { icon: "/img/feat-3.png", title: "Việc Kinh Doanh", to: "/ppt?category=Kinh doanh" },
+          { icon: "/img/feat-4.png", title: "Tiếp Thị", to: "/ppt?category=Tiếp thị" },
+          { icon: "/img/feat-5.png", title: "Đa Mục đích", to: "/ppt?category=Đa mục đích" },
         ].map((feature, index) => (
           <Link to={feature.to} className="card-feature" key={index}>
             <img
@@ -330,7 +330,7 @@ function HomePage() {
               alt={feature.title}
               className="icon"
               loading="lazy"
-              onError={(e) => (e.target.src = "/images/fallback-feature.png")}
+              onError={(e) => (e.target.src = "/img/fallback-feature.png")}
             />
             <div className="feature-content">
               <span>{feature.title}</span>
@@ -370,7 +370,7 @@ function HomePage() {
                   alt={ppt.tieu_de}
                   className="template-img"
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-ppt.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-ppt.png")}
                 />
                 <div className="overlay">
                   <i
@@ -411,7 +411,7 @@ function HomePage() {
                   alt={category.tieu_de}
                   className="template-img"
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-image.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-image.png")}
                 />
                 <div className="overlay">
                   <i
@@ -464,7 +464,7 @@ function HomePage() {
                   width={350}
                   height={200}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-background.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-background.png")}
                 />
                 <div className="overlay">
                   <i
@@ -501,7 +501,7 @@ function HomePage() {
                   width={350}
                   height={200}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-background.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-background.png")}
                 />
                 <div className="overlay">
                   <i
@@ -537,7 +537,7 @@ function HomePage() {
             alt={`Gallery Img${index + 1}`}
             className={`gallery-img-${index + 1}`}
             loading="lazy"
-            onError={(e) => (e.target.src = "/images/fallback-gallery.png")}
+            onError={(e) => (e.target.src = "/img/fallback-gallery.png")}
           />
         ))}
       </section>
@@ -553,7 +553,7 @@ function HomePage() {
                   src={blog.img}
                   alt={blog.alt}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-blog.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-blog.png")}
                 />
                 <div className="button-group-blog">
                   <span>

@@ -17,31 +17,31 @@ const mockCategories = [
 
 // Mock data for PowerPoints
 const mockPowerpoints = [
-  { id: 1, tieu_de: "Mẫu PowerPoint Lịch sử 1", duong_dan_anh_nho: "/images/ppt1.png", duong_dan_tap_tin: "/files/ppt1.pptx", la_pro: false, danh_muc_id: 1 },
-  { id: 2, tieu_de: "Mẫu PowerPoint Giáo dục 1", duong_dan_anh_nho: "/images/ppt2.png", duong_dan_tap_tin: "/files/ppt2.pptx", la_pro: true, danh_muc_id: 2 },
-  { id: 3, tieu_de: "Mẫu PowerPoint Kinh doanh 1", duong_dan_anh_nho: "/images/ppt3.png", duong_dan_tap_tin: "/files/ppt3.pptx", la_pro: false, danh_muc_id: 3 },
-  { id: 4, tieu_de: "Mẫu PowerPoint Công nghệ 1", duong_dan_anh_nho: "/images/ppt4.png", duong_dan_tap_tin: "/files/ppt4.pptx", la_pro: true, danh_muc_id: 4 },
-  { id: 5, tieu_de: "Mẫu PowerPoint Sáng tạo 1", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt5.pptx", la_pro: false, danh_muc_id: 5 },
-  { id: 6, tieu_de: "Mẫu PowerPoint Lịch sử 2", duong_dan_anh_nho: "/images/ppt1.png", duong_dan_tap_tin: "/files/ppt6.pptx", la_pro: false, danh_muc_id: 1 },
-  { id: 7, tieu_de: "Mẫu PowerPoint Giáo dục 2", duong_dan_anh_nho: "/images/ppt4.png", duong_dan_tap_tin: "/files/ppt7.pptx", la_pro: true, danh_muc_id: 2 },
-  { id: 8, tieu_de: "Mẫu PowerPoint Kinh doanh 2", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt8.pptx", la_pro: false, danh_muc_id: 3 },
-  { id: 9, tieu_de: "Mẫu PowerPoint Công nghệ 2", duong_dan_anh_nho: "/images/ppt2.png", duong_dan_tap_tin: "/files/ppt9.pptx", la_pro: true, danh_muc_id: 4 },
-  { id: 10, tieu_de: "Mẫu PowerPoint Sáng tạo 2", duong_dan_anh_nho: "/images/ppt3.png", duong_dan_tap_tin: "/files/ppt10.pptx", la_pro: false, danh_muc_id: 5 },
-  { id: 11, tieu_de: "Mẫu PowerPoint Lịch sử 3", duong_dan_anh_nho: "/images/ppt1.png", duong_dan_tap_tin: "/files/ppt11.pptx", la_pro: false, danh_muc_id: 1 },
-  { id: 12, tieu_de: "Mẫu PowerPoint Giáo dục 3", duong_dan_anh_nho: "/images/ppt2.png", duong_dan_tap_tin: "/files/ppt12.pptx", la_pro: true, danh_muc_id: 2 },
-  { id: 13, tieu_de: "Mẫu PowerPoint Kinh doanh 3", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt13.pptx", la_pro: false, danh_muc_id: 3 },
-  { id: 14, tieu_de: "Mẫu PowerPoint Công nghệ 3", duong_dan_anh_nho: "/images/ppt3.png", duong_dan_tap_tin: "/files/ppt14.pptx", la_pro: true, danh_muc_id: 4 },
-  { id: 15, tieu_de: "Mẫu PowerPoint Sáng tạo 3", duong_dan_anh_nho: "/images/ppt4.png", duong_dan_tap_tin: "/files/ppt15.pptx", la_pro: false, danh_muc_id: 5 },
-  { id: 16, tieu_de: "Mẫu PowerPoint Lịch sử 4", duong_dan_anh_nho: "/images/ppt1.png", duong_dan_tap_tin: "/files/ppt16.pptx", la_pro: false, danh_muc_id: 1 },
-  { id: 17, tieu_de: "Mẫu PowerPoint Giáo dục 4", duong_dan_anh_nho: "/images/ppt4.png", duong_dan_tap_tin: "/files/ppt17.pptx", la_pro: true, danh_muc_id: 2 },
-  { id: 18, tieu_de: "Mẫu PowerPoint Kinh doanh 4", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt18.pptx", la_pro: false, danh_muc_id: 3 },
-  { id: 19, tieu_de: "Mẫu PowerPoint Công nghệ 4", duong_dan_anh_nho: "/images/ppt3.png", duong_dan_tap_tin: "/files/ppt19.pptx", la_pro: true, danh_muc_id: 4 },
-  { id: 20, tieu_de: "Mẫu PowerPoint Sáng tạo 4", duong_dan_anh_nho: "/images/ppt2.png", duong_dan_tap_tin: "/files/ppt20.pptx", la_pro: false, danh_muc_id: 5 },
-  { id: 21, tieu_de: "Mẫu PowerPoint Lịch sử 5", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt21.pptx", la_pro: false, danh_muc_id: 1 },
-  { id: 22, tieu_de: "Mẫu PowerPoint Giáo dục 5", duong_dan_anh_nho: "/images/ppt1.png", duong_dan_tap_tin: "/files/ppt22.pptx", la_pro: true, danh_muc_id: 2 },
-  { id: 23, tieu_de: "Mẫu PowerPoint Kinh doanh 5", duong_dan_anh_nho: "/images/ppt4.png", duong_dan_tap_tin: "/files/ppt23.pptx", la_pro: false, danh_muc_id: 3 },
-  { id: 24, tieu_de: "Mẫu PowerPoint Công nghệ 5", duong_dan_anh_nho: "/images/ppt5.png", duong_dan_tap_tin: "/files/ppt24.pptx", la_pro: true, danh_muc_id: 4 },
-  { id: 25, tieu_de: "Mẫu PowerPoint Sáng tạo 5", duong_dan_anh_nho: "/images/ppt3.png", duong_dan_tap_tin: "/files/ppt25.pptx", la_pro: false, danh_muc_id: 5 },
+  { id: 1, tieu_de: "Mẫu PowerPoint Lịch sử 1", duong_dan_anh_nho: "/img/ppt1.png", duong_dan_tap_tin: "/files/ppt1.pptx", la_pro: false, danh_muc_id: 1 },
+  { id: 2, tieu_de: "Mẫu PowerPoint Giáo dục 1", duong_dan_anh_nho: "/img/ppt2.png", duong_dan_tap_tin: "/files/ppt2.pptx", la_pro: true, danh_muc_id: 2 },
+  { id: 3, tieu_de: "Mẫu PowerPoint Kinh doanh 1", duong_dan_anh_nho: "/img/ppt3.png", duong_dan_tap_tin: "/files/ppt3.pptx", la_pro: false, danh_muc_id: 3 },
+  { id: 4, tieu_de: "Mẫu PowerPoint Công nghệ 1", duong_dan_anh_nho: "/img/ppt4.png", duong_dan_tap_tin: "/files/ppt4.pptx", la_pro: true, danh_muc_id: 4 },
+  { id: 5, tieu_de: "Mẫu PowerPoint Sáng tạo 1", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt5.pptx", la_pro: false, danh_muc_id: 5 },
+  { id: 6, tieu_de: "Mẫu PowerPoint Lịch sử 2", duong_dan_anh_nho: "/img/ppt1.png", duong_dan_tap_tin: "/files/ppt6.pptx", la_pro: false, danh_muc_id: 1 },
+  { id: 7, tieu_de: "Mẫu PowerPoint Giáo dục 2", duong_dan_anh_nho: "/img/ppt4.png", duong_dan_tap_tin: "/files/ppt7.pptx", la_pro: true, danh_muc_id: 2 },
+  { id: 8, tieu_de: "Mẫu PowerPoint Kinh doanh 2", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt8.pptx", la_pro: false, danh_muc_id: 3 },
+  { id: 9, tieu_de: "Mẫu PowerPoint Công nghệ 2", duong_dan_anh_nho: "/img/ppt2.png", duong_dan_tap_tin: "/files/ppt9.pptx", la_pro: true, danh_muc_id: 4 },
+  { id: 10, tieu_de: "Mẫu PowerPoint Sáng tạo 2", duong_dan_anh_nho: "/img/ppt3.png", duong_dan_tap_tin: "/files/ppt10.pptx", la_pro: false, danh_muc_id: 5 },
+  { id: 11, tieu_de: "Mẫu PowerPoint Lịch sử 3", duong_dan_anh_nho: "/img/ppt1.png", duong_dan_tap_tin: "/files/ppt11.pptx", la_pro: false, danh_muc_id: 1 },
+  { id: 12, tieu_de: "Mẫu PowerPoint Giáo dục 3", duong_dan_anh_nho: "/img/ppt2.png", duong_dan_tap_tin: "/files/ppt12.pptx", la_pro: true, danh_muc_id: 2 },
+  { id: 13, tieu_de: "Mẫu PowerPoint Kinh doanh 3", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt13.pptx", la_pro: false, danh_muc_id: 3 },
+  { id: 14, tieu_de: "Mẫu PowerPoint Công nghệ 3", duong_dan_anh_nho: "/img/ppt3.png", duong_dan_tap_tin: "/files/ppt14.pptx", la_pro: true, danh_muc_id: 4 },
+  { id: 15, tieu_de: "Mẫu PowerPoint Sáng tạo 3", duong_dan_anh_nho: "/img/ppt4.png", duong_dan_tap_tin: "/files/ppt15.pptx", la_pro: false, danh_muc_id: 5 },
+  { id: 16, tieu_de: "Mẫu PowerPoint Lịch sử 4", duong_dan_anh_nho: "/img/ppt1.png", duong_dan_tap_tin: "/files/ppt16.pptx", la_pro: false, danh_muc_id: 1 },
+  { id: 17, tieu_de: "Mẫu PowerPoint Giáo dục 4", duong_dan_anh_nho: "/img/ppt4.png", duong_dan_tap_tin: "/files/ppt17.pptx", la_pro: true, danh_muc_id: 2 },
+  { id: 18, tieu_de: "Mẫu PowerPoint Kinh doanh 4", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt18.pptx", la_pro: false, danh_muc_id: 3 },
+  { id: 19, tieu_de: "Mẫu PowerPoint Công nghệ 4", duong_dan_anh_nho: "/img/ppt3.png", duong_dan_tap_tin: "/files/ppt19.pptx", la_pro: true, danh_muc_id: 4 },
+  { id: 20, tieu_de: "Mẫu PowerPoint Sáng tạo 4", duong_dan_anh_nho: "/img/ppt2.png", duong_dan_tap_tin: "/files/ppt20.pptx", la_pro: false, danh_muc_id: 5 },
+  { id: 21, tieu_de: "Mẫu PowerPoint Lịch sử 5", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt21.pptx", la_pro: false, danh_muc_id: 1 },
+  { id: 22, tieu_de: "Mẫu PowerPoint Giáo dục 5", duong_dan_anh_nho: "/img/ppt1.png", duong_dan_tap_tin: "/files/ppt22.pptx", la_pro: true, danh_muc_id: 2 },
+  { id: 23, tieu_de: "Mẫu PowerPoint Kinh doanh 5", duong_dan_anh_nho: "/img/ppt4.png", duong_dan_tap_tin: "/files/ppt23.pptx", la_pro: false, danh_muc_id: 3 },
+  { id: 24, tieu_de: "Mẫu PowerPoint Công nghệ 5", duong_dan_anh_nho: "/img/ppt5.png", duong_dan_tap_tin: "/files/ppt24.pptx", la_pro: true, danh_muc_id: 4 },
+  { id: 25, tieu_de: "Mẫu PowerPoint Sáng tạo 5", duong_dan_anh_nho: "/img/ppt3.png", duong_dan_tap_tin: "/files/ppt25.pptx", la_pro: false, danh_muc_id: 5 },
 ];
 
 function PptPage() {
@@ -224,7 +224,7 @@ function PptPage() {
                   alt={ppt.tieu_de}
                   className="template-img"
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-ppt.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-ppt.png")}
                 />
                 <div className="overlay">
                   <i

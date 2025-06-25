@@ -104,13 +104,13 @@ function App() {
         {
           id: 1,
           tieu_de: "Mẫu PowerPoint Lịch sử",
-          duong_dan_anh_nho: "/images/mock_ppt1.jpg",
+          duong_dan_anh_nho: "/img/mock_ppt1.jpg",
           la_pro: false,
         },
         {
           id: 2,
           tieu_de: "Mẫu PowerPoint Giáo dục",
-          duong_dan_anh_nho: "/images/mock_ppt2.jpg",
+          duong_dan_anh_nho: "/img/mock_ppt2.jpg",
           la_pro: true,
         },
       ];
@@ -198,12 +198,12 @@ function App() {
               </div>
               <div className="container-logo">
                 <img
-                  src="/images/logo.png"
+                  src="/img/logo.png"
                   alt="Logo"
                   width={50}
                   height={50}
                   className="logo"
-                  onError={(e) => (e.target.src = "/images/fallback-logo.png")} // Fallback image
+                  onError={(e) => (e.target.src = "/img/fallback-logo.png")} // Fallback image
                 />
                 <h1 className="logo">
                   <Link to="/">XPoint</Link>
@@ -247,7 +247,7 @@ function App() {
                           alt="Avatar"
                           style={{ borderRadius: "50%", width: "50px", height: "50px", cursor: "pointer" }}
                           onClick={handleUserClick}
-                          onError={(e) => (e.target.src = "/images/fallback-avatar.png")} // Fallback avatar
+                          onError={(e) => (e.target.src = "/img/fallback-avatar.png")} // Fallback avatar
                         />
                         <h3 style={{ margin: "5px 0", fontSize: "16px" }}>{user.ten}</h3>
                         <p style={{ margin: "0", fontSize: "12px", color: "#666" }}>
@@ -496,9 +496,9 @@ function App() {
             <div className="copyright">
               <p>Bản quyền của Đỗ Thị Xuân © 2025</p>
               <img
-                src="/images/payment.png"
+                src="/img/payment.png"
                 alt="Payment Methods"
-                onError={(e) => (e.target.src = "/images/fallback-payment.png")} // Fallback image
+                onError={(e) => (e.target.src = "/img/fallback-payment.png")} // Fallback image
               />
             </div>
           </div>
