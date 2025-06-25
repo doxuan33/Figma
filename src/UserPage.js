@@ -50,7 +50,7 @@ const mockDownloadHistory = [
     status: "Free",
     date: "2024-06-15T14:30:00Z",
     hinhAnhId: 102,
-    downloadLink: "/img/creative-image.jpg",
+    downloadLink: "/img/ppt1.png",
   },
 ];
 
@@ -92,7 +92,7 @@ const mockPurchasedItems = [
     price: 50000,
     purchaseDate: "2024-06-05T11:00:00Z",
     hinhAnhId: 104,
-    duong_dan_tap_tin: "/img/nature-image.jpg",
+    duong_dan_tap_tin: "/img/ppt1.png",
   },
 ];
 
@@ -132,7 +132,7 @@ const mockFavorites = [
     duong_dan_anh_nho: "https://via.placeholder.com/80",
     la_pro: "Miễn phí",
     mien_phi: true,
-    duong_dan_tap_tin: "/img/art-image.jpg",
+    duong_dan_tap_tin: "/img/ppt1.png",
   },
 ];
 

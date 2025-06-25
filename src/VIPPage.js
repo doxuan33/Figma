@@ -53,17 +53,17 @@ const VIPPage = () => {
 
   const blogs = [
     {
-      img: "/images/blog_1.png",
+      img: "https://js.pngtree.com/a4/static/1gtrjrq.a76fff00.png",
       alt: "Blog 1",
       description: "Đội ngũ thiết kế độc quyền đông đảo",
     },
     {
-      img: "/images/blog_2.png",
+      img: "https://js.pngtree.com/a4/static/iqtcld.153b81b2.png",
       alt: "Blog 2",
       description: "Hiệp định PRF cho giấy phép thương mại",
     },
     {
-      img: "/images/blog_3.png",
+      img: "https://js.pngtree.com/a4/static/gjckia.325a0204.png",
       alt: "Blog 3",
       description: "Tải xuống không giới hạn tài nguyên hình ảnh đa thể loại",
     },
@@ -125,7 +125,7 @@ const VIPPage = () => {
                   width={250}
                   height={250}
                   loading="lazy"
-                  onError={(e) => (e.target.src = "/images/fallback-blog.png")}
+                  onError={(e) => (e.target.src = "/img/fallback-blog.png")}
                 />
                 <div className="button-group-blog">
                   <span>

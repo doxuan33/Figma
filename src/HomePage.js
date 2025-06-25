@@ -56,19 +56,19 @@ const mockImages = [
   {
     id: 3,
     tieu_de: "Hình ảnh Quang cảnh",
-    duong_dan_anh_nho: "/img/sapa.jpg",
+    duong_dan_anh_nho: "https://thuthuatnhanh.com/wp-content/uploads/2021/01/hinh-anh-sapa-dep-thung-lung-hung-vi.jpg",
     mien_phi: false,
   },
   {
     id: 4,
     tieu_de: "Hình ảnh Động vật",
-    duong_dan_anh_nho: "/img/animal.jpg",
+    duong_dan_anh_nho: "https://img3.thuthuatphanmem.vn/uploads/2019/06/17/hinh-anh-dep-ngo-nghinh-ve-dong-vat_102855690.jpg",
     mien_phi: true,
   },
   {
     id: 5,
     tieu_de: "Hình ảnh Vườn hoa",
-    duong_dan_anh_nho: "/img/flower.jpg",
+    duong_dan_anh_nho: "https://antimatter.vn/wp-content/uploads/2022/06/anh-bau-troi-va-hoa.jpg",
     mien_phi: false,
   },
 ];
@@ -525,11 +525,11 @@ function HomePage() {
       {/* Gallery Section */}
       <section className="gallery">
         {[
-          "/img/gallery-1.png",
-          "/img/gallery-2.png",
-          "/img/gallery-3.png",
-          "/img/gallery-4.png",
-          "/img/gallery-5.png",
+          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-4-1709.jpeg",
+          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-3-825.jpeg",
+          "https://ben.com.vn/tin-tuc/wp-content/uploads/2021/06/mau-power-point-dep-6.jpg",
+          "https://img.thuthuattinhoc.vn/uploads/2019/02/01/slide-dep-cho-thuyet-trinh_101043422.jpg",
+          "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/cach-lam-Powerpoint-dep.png",
         ].map((src, index) => (
           <img
             key={index}
