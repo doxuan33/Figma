@@ -394,7 +394,7 @@ function App() {
                           {categories.map((category) => (
                             <li key={category.id}>
                               <a
-                                href="#"
+                                href="/"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   handleCategoryClick(category);
@@ -468,16 +468,16 @@ function App() {
               <div className="information">
                 <p className="title-footer">Thông tin</p>
                 <ul>
-                  <li><a href="#">Cung cấp thông tin</a></li>
-                  <li><a href="#">Chính trị riêng tư</a></li>
-                  <li><a href="#">Liên hệ</a></li>
+                  <li><a href="/">Cung cấp thông tin</a></li>
+                  <li><a href="/">Chính trị riêng tư</a></li>
+                  <li><a href="/">Liên hệ</a></li>
                 </ul>
               </div>
               <div className="my-account">
                 <p className="title-footer">Hiểu thêm</p>
                 <ul>
-                  <li><a href="#">Lịch sử của Xpoint</a></li>
-                  <li><a href="#">Danh sách mong muốn</a></li>
+                  <li><a href="/">Lịch sử của Xpoint</a></li>
+                  <li><a href="/">Danh sách mong muốn</a></li>
                 </ul>
               </div>
               <div className="newsletter">

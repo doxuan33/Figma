@@ -129,7 +129,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 ].map(({ icon, platform }, index) => (
                   <a
                     key={index}
-                    href="#"
+                    href="/"
                     className={styles.icon}
                     onClick={(e) => {
                       e.preventDefault();
@@ -188,7 +188,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 ].map(({ icon, platform }, index) => (
                   <a
                     key={index}
-                    href="#"
+                    href="/"
                     className={styles.icon}
                     onClick={(e) => {
                       e.preventDefault();
@@ -219,7 +219,7 @@ const LoginPage = ({ onLoginSuccess }) => {
                 required
                 disabled={isLoading}
               />
-              <a href="#" onClick={(e) => e.preventDefault()}>
+              <a href="/" onClick={(e) => e.preventDefault()}>
                 Quên mật khẩu?
               </a>
               <button type="submit" disabled={isLoading}>
