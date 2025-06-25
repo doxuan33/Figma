@@ -446,24 +446,10 @@ function App() {
         <Route path="/ppt" element={<PptPage />} />
         <Route path="/png" element={<PngPage />} />
         <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
-        <Route
-          path="/user"
-          element={
-              <UserPage />
-          }
-        />
-        <Route
-          path="/vip"
-          element={
-              <VIPPage />
-          }
-        />
-        <Route
-          path="/checkout/:packageId"
-          element={
-              <VIPcheckPage />
-          }
-        />
+        <Route path="/user" element={<UserPage />} />
+        <Route path="/vip" element={<VIPPage />} />
+        <Route path="/checkout/:packageId" element={<VIPcheckPage />} />
+
         <Route path="/ai" element={<AIPage />} />
         <Route path="/success" element={<Success />} />
       </Routes>
