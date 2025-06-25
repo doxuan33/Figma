@@ -1,24 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePlusG, faFacebookF, faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { Toast } from "primereact/toast";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import styles from "./login.module.css";
 
-// Mock data
+// Mock data aligned with App.js and VIPcheckPage.js
 const mockUser = {
   id: "82815496",
   ten: "Nguyễn Văn A",
   email: "nguyenvana@example.com",
+  so_dien_thoai: "0123456789",
   mat_khau: "password123",
   thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z",
 };
 
+// ErrorBoundary component
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="text-center mt-10 text-red-500">Có lỗi xảy ra. Vui lòng thử lại.</div>;
+    }
+    return this.props.children;
+  }
+}
+
 const LoginPage = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
+  const toast = useRef(null);
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
     ten: "",
@@ -28,7 +47,10 @@ const LoginPage = ({ onLoginSuccess }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleSignUp = () => setIsSignUp((prev) => !prev);
+  const toggleSignUp = () => {
+    setIsSignUp((prev) => !prev);
+    setErrorMessage("");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,62 +81,87 @@ const LoginPage = ({ onLoginSuccess }) => {
     setIsLoading(true);
     setErrorMessage("");
 
-    // Kiểm tra validation
     const validationError = validateForm();
     if (validationError) {
       setErrorMessage(validationError);
+      toast.current.show({
+        severity: "error",
+        summary: "Lỗi",
+        detail: validationError,
+      });
       setIsLoading(false);
       return;
     }
 
     try {
       if (isSignUp) {
-        // Mô phỏng đăng ký thành công
+        // Mock signup
         setErrorMessage("Đăng ký thành công! Vui lòng đăng nhập.");
+        toast.current.show({
+          severity: "success",
+          summary: "Thành công",
+          detail: "Đăng ký thành công! Vui lòng đăng nhập.",
+        });
         toggleSignUp();
       } else {
-        // Mô phỏng đăng nhập
+        // Mock login
         if (
           (formData.emailOrUsername === mockUser.email ||
             formData.emailOrUsername === mockUser.ten) &&
           formData.mat_khau === mockUser.mat_khau
         ) {
-          // Mô phỏng token
-          const token = "mock-jwt-token-12345";
-          localStorage.setItem("token", token);
+          // Set tokens
+          localStorage.setItem("token", "mock-jwt-token-12345");
+          localStorage.setItem("refreshToken", "mock-refresh-token-67890");
 
-          // Mô phỏng thông tin người dùng từ API /auth/me
+          // User data for onLoginSuccess
           const user = {
             id: mockUser.id,
             ten: mockUser.ten,
+            so_dien_thoai: mockUser.so_dien_thoai,
             thoi_gian_het_han_hoi_vien: mockUser.thoi_gian_het_han_hoi_vien,
           };
 
-          // Gọi onLoginSuccess với dữ liệu người dùng
           onLoginSuccess(user);
-          setErrorMessage("");
-          navigate("/");
+          toast.current.show({
+            severity: "success",
+            summary: "Thành công",
+            detail: "Đăng nhập thành công!",
+          });
         } else {
           throw new Error("Email/tên người dùng hoặc mật khẩu không đúng");
         }
       }
     } catch (error) {
-      setErrorMessage(error.message || "Có lỗi xảy ra, vui lòng thử lại");
+      const message = error.message || "Có lỗi xảy ra, vui lòng thử lại";
+      setErrorMessage(message);
+      toast.current.show({
+        severity: "error",
+        summary: "Lỗi",
+        detail: message,
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSocialLogin = (platform) => {
-    setErrorMessage(`Đăng nhập bằng ${platform} hiện chưa được hỗ trợ.`);
+    const message = `Đăng nhập bằng ${platform} hiện chưa được hỗ trợ.`;
+    setErrorMessage(message);
+    toast.current.show({
+      severity: "warn",
+      summary: "Thông báo",
+      detail: message,
+    });
   };
 
   return (
-    <>
+    <ErrorBoundary>
       <Helmet>
-        <title>{isSignUp ? "Đăng ký - MyApp" : "Đăng nhập - MyApp"}</title>
+        <title>{isSignUp ? "Đăng ký - XPoint" : "Đăng nhập - XPoint"}</title>
       </Helmet>
       <div className="fullscreen-bg">
+        <Toast ref={toast} />
         <div className={`${styles.container} ${isSignUp ? styles.active : ""}`}>
           {/* Form Đăng ký */}
           <div className={`${styles.formContainer} ${styles.signUp}`}>
@@ -249,7 +296,7 @@ const LoginPage = ({ onLoginSuccess }) => {
           </div>
         </div>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };
 

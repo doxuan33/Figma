@@ -34,22 +34,37 @@ const mockUser = {
   thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z",
 };
 
-// PrivateRoute component with token validation
+// PrivateRoute component with enhanced token validation
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
   const [isValidating, setIsValidating] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const validateToken = async () => {
       try {
         if (token) {
-          // Mock validation (replace with API call in production)
-          setIsValidating(false);
+          // Mock API call for token validation (replace with actual API)
+          // Example: const response = await fetch('/api/validate-token', { headers: { Authorization: `Bearer ${token}` } });
+          const isValid = true; // Mock: assume token is valid
+          setIsAuthenticated(isValid);
         } else {
-          setIsValidating(false);
+          // Attempt silent authentication (e.g., via refresh token or cookie)
+          const refreshToken = localStorage.getItem("refreshToken");
+          if (refreshToken) {
+            // Mock refresh token logic
+            localStorage.setItem("token", "mock-token");
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+          }
         }
-      } catch {
+      } catch (error) {
+        console.error("Token validation failed:", error);
         localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        setIsAuthenticated(false);
+      } finally {
         setIsValidating(false);
       }
     };
@@ -60,7 +75,7 @@ const PrivateRoute = ({ children }) => {
     return <div className="text-center mt-10 text-gray-700">Đang xác thực...</div>;
   }
 
-  return token ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 // ErrorBoundary component
@@ -96,10 +111,11 @@ function App() {
     setCategories(mockCategories);
   }, []);
 
-  // Check user login and VIP status
+  // Initialize user state based on token
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      // Mock user fetch (replace with API call)
       setUser(mockUser);
     }
   }, []);
@@ -114,12 +130,13 @@ function App() {
   // Handle login success
   const handleLoginSuccess = useCallback((userData) => {
     localStorage.setItem("token", "mock-token");
+    localStorage.setItem("refreshToken", "mock-refresh-token"); // Mock refresh token
     setUser(userData || mockUser);
     navigate("/user", { replace: true });
   }, [navigate]);
 
   // Handle search
-  const handleSearch = async (e) => {
+  const handleSearch = useCallback(async (e) => {
     e.preventDefault();
     try {
       const params = new URLSearchParams();
@@ -166,37 +183,38 @@ function App() {
         replace: true,
       });
     }
-  };
+  }, [searchQuery, selectedCategory, location, navigate]);
 
   // Handle logout
   const handleLogout = useCallback(() => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
     setUser(null);
     navigate("/login", { replace: true });
   }, [navigate]);
 
   // Navigate to login
-  const goToLogin = () => {
+  const goToLogin = useCallback(() => {
     op.current?.hide();
     navigate("/login");
-  };
+  }, [navigate]);
 
   // Show/hide overlay
-  const showOverlay = (e) => op.current?.show(e);
-  const hideOverlay = () => op.current?.hide();
+  const showOverlay = useCallback((e) => op.current?.show(e), []);
+  const hideOverlay = useCallback(() => op.current?.hide(), []);
 
   // Handle user click
-  const handleUserClick = () => {
+  const handleUserClick = useCallback(() => {
     hideOverlay();
     navigate(user ? "/user" : "/login");
-  };
+  }, [navigate, user, hideOverlay]);
 
   // Handle category click
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = useCallback((category) => {
     setShowDropdown(false);
     setSearchQuery("");
     navigate(`/ppt?category=${encodeURIComponent(category.ten)}`);
-  };
+  }, [navigate]);
 
   // Check VIP status
   const isVIP = user?.thoi_gian_het_han_hoi_vien
@@ -211,7 +229,7 @@ function App() {
             <div className={`container-hero container ${isScrolled ? "hidden" : ""}`}>
               <div className="hero">
                 <div className="customer-support">
-                  <i className="bx bx-headphone"></i>
+                  <i className="bx bx-headphone" />
                   <div className="content-customer-support">
                     <span className="text">Hỗ trợ khách hàng</span>
                     <span className="number">0378656586</span>
@@ -239,7 +257,7 @@ function App() {
                     onClick={handleUserClick}
                     aria-label="User profile"
                   >
-                    <i className="bx bxs-user"></i>
+                    <i className="bx bxs-user" />
                   </button>
                   <OverlayPanel
                     ref={op}
