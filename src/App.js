@@ -38,7 +38,7 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [user, setUser] = useState(null);
-  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false); // eslint-disable-line no-unused-vars
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -136,10 +136,11 @@ function App() {
     }
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.value);
-    setSearchQuery("");
-  };
+  // Xóa handleCategoryChange không sử dụng
+  // const handleCategoryChange = (e) => {
+  //   setSelectedCategory(e.value);
+  //   setSearchQuery("");
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -203,7 +204,8 @@ function App() {
                   width={50}
                   height={50}
                   className="logo"
-                  onError={(e) => (e.target.src = "/img/fallback-logo.png")} // Fallback image
+                  loading="lazy"
+                  onError={(e) => (e.target.src = "/img/fallback-logo.png")}
                 />
                 <h1 className="logo">
                   <Link to="/">XPoint</Link>
@@ -227,7 +229,7 @@ function App() {
                 <OverlayPanel
                   ref={op}
                   style={{ width: "300px", fontFamily: "Arial, sans-serif" }}
-                  dismissable={true} // Enable dismissable for better UX
+                  dismissable={true}
                   onMouseEnter={() => setIsOverlayVisible(true)}
                   onMouseLeave={hideOverlay}
                 >
@@ -243,11 +245,12 @@ function App() {
                       </div>
                       <div style={{ margin: "10px 0" }}>
                         <img
-                          src="https://png.pngtree.com/png-clipart/20200701/original/pngtree-cat-default-avatar-png-image_5416936.jpg"
+                          src="/img/avatar.png"
                           alt="Avatar"
                           style={{ borderRadius: "50%", width: "50px", height: "50px", cursor: "pointer" }}
+                          loading="lazy"
                           onClick={handleUserClick}
-                          onError={(e) => (e.target.src = "/img/fallback-avatar.png")} // Fallback avatar
+                          onError={(e) => (e.target.src = "/img/fallback-avatar.png")}
                         />
                         <h3 style={{ margin: "5px 0", fontSize: "16px" }}>{user.ten}</h3>
                         <p style={{ margin: "0", fontSize: "12px", color: "#666" }}>
@@ -330,7 +333,7 @@ function App() {
                             border: "none",
                             width: "100%",
                           }}
-                          onClick={() => navigate("/vip")} // Add navigation
+                          onClick={() => navigate("/vip")}
                         />
                       </div>
                       <div
@@ -498,7 +501,8 @@ function App() {
               <img
                 src="/img/payment.png"
                 alt="Payment Methods"
-                onError={(e) => (e.target.src = "/img/fallback-payment.png")} // Fallback image
+                loading="lazy"
+                onError={(e) => (e.target.src = "/img/fallback-payment.png")}
               />
             </div>
           </div>

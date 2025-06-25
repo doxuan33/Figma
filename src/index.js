@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -13,7 +13,9 @@ const PrivateRoute = ({ children }) => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter> {/* ✅ Thêm dòng này */}
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

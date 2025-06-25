@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Paginator } from "primereact/paginator";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -63,7 +63,7 @@ function PptPage() {
   const queryParams = new URLSearchParams(location.search);
   const categoryFromUrl = queryParams.get("category");
   const searchQuery = location.state?.searchQuery || "";
-  const searchResults = location.state?.searchResults || [];
+  const searchResults = useMemo(() => location.state?.searchResults || [], [location.state?.searchResults]);
 
   // Load favorites from localStorage
   useEffect(() => {
@@ -117,7 +117,7 @@ function PptPage() {
     }
     setPowerpoints(filteredPowerpoints);
     setLoading(false);
-  }, [searchQuery, searchResults, selectedCategory]);
+  }, [searchQuery, searchResults, selectedCategory, location]); // Added location to dependencies
 
   const onPageChange = (event) => {
     setFirst(event.first);
@@ -154,16 +154,17 @@ function PptPage() {
       const isFavorited = prevFavorites.some((fav) => fav.id === ppt.id);
       if (isFavorited) {
         return prevFavorites.filter((fav) => fav.id !== ppt.id);
-      } else if (prevFavorites.length < 50) { // Limit favorites to 50
+      } else if (prevFavorites.length < 50) {
         return [...prevFavorites, ppt];
       }
       return prevFavorites;
     });
   };
 
-  const navigateToUserPage = () => {
-    navigate("/user", { state: { favorites } });
-  };
+  // Removed navigateToUserPage
+  // const navigateToUserPage = () => {
+  //   navigate("/user", { state: { favorites } });
+  // };
 
   return (
     <>

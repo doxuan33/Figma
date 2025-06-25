@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -91,13 +91,13 @@ function HomePage() {
   const [loadingPowerpoints, setLoadingPowerpoints] = useState(true);
   const [loadingBackgrounds, setLoadingBackgrounds] = useState(true);
   const [carouselDirection, setCarouselDirection] = useState("");
-  const [isSliding, setIsSliding] = useState(false); // Prevent multiple clicks
+  const [isSliding, setIsSliding] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const searchQuery = location.state?.searchQuery || "";
-  const searchResults = location.state?.searchResults || [];
+  const searchResults = useMemo(() => location.state?.searchResults || [], [location.state?.searchResults]);
 
   // Load favorites from localStorage
   useEffect(() => {
@@ -140,7 +140,7 @@ function HomePage() {
     setLoadingPowerpoints(false);
     setLoadingImages(false);
     setLoadingBackgrounds(false);
-  }, [searchQuery, searchResults]);
+  }, [searchQuery, searchResults, location]); // Thêm location vào phụ thuộc
 
   // Carousel functionality
   useEffect(() => {
@@ -215,7 +215,7 @@ function HomePage() {
       const isFavorited = prevFavorites.some((fav) => fav.id === item.id);
       if (isFavorited) {
         return prevFavorites.filter((fav) => fav.id !== item.id);
-      } else if (prevFavorites.length < 50) { // Limit favorites to 50
+      } else if (prevFavorites.length < 50) {
         return [...prevFavorites, item];
       }
       return prevFavorites;
@@ -254,7 +254,7 @@ function HomePage() {
       description:
         "70,000+ mẫu đám mây sáng tạo adobe miễn phí và cao cấp trong photoshop, illustrator, indesign, pdf.",
     },
-];
+  ];
 
   return (
     <>
@@ -525,11 +525,11 @@ function HomePage() {
       {/* Gallery Section */}
       <section className="gallery">
         {[
-          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-4-1709.jpeg",
-          "https://images2.thanhnien.vn/Uploaded/hoangnam/2022_09_06/anh-3-825.jpeg",
-          "https://ben.com.vn/tin-tuc/wp-content/uploads/2021/06/mau-power-point-dep-6.jpg",
-          "https://img.thuthuattinhoc.vn/uploads/2019/02/01/slide-dep-cho-thuyet-trinh_101043422.jpg",
-          "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/cach-lam-Powerpoint-dep.png",
+          "/img/gallery-1.png",
+          "/img/gallery-2.png",
+          "/img/gallery-3.png",
+          "/img/gallery-4.png",
+          "/img/gallery-5.png",
         ].map((src, index) => (
           <img
             key={index}
