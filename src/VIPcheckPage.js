@@ -191,7 +191,6 @@ const VIPcheckPage = () => {
         throw new Error("Vui lòng đồng ý với các điều khoản dịch vụ và gia hạn tự động.");
       }
 
-      const backendPaymentMethod = paymentMethodMap[paymentMethod] || paymentMethod;
       const transactionType = selectedPackage.ten_goi
         ? "membership"
         : selectedPackage.type === "powerpoint"
@@ -233,11 +232,11 @@ const VIPcheckPage = () => {
           basePriceVND,
           discount,
           downloadLink: selectedPackage.duong_dan_tap_tin,
-          transactionType,
+          orderId
         },
       });
     } catch (err) {
-      console.error("Handle Payment Error:", err);
+      console.error("Handle Payment error:", err);
       setError(err.message);
       toast.current.show({
         severity: "error",
@@ -277,10 +276,10 @@ const VIPcheckPage = () => {
                   Vui lòng xác nhận thông tin bạn đã chọn.
                 </p>
               </div>
-              <div className="payment-content">
+            <div className="payment-content">
                 <div className="payment-body">
                   <div className="payment-plan">
-                    <div className="payment-plan-type">{selectedPackage.ten_goi ? "VIP" : "Pro"}</div>
+                    <div className="payment-plan-type">{selectedPackage?.ten_goi ? "VIP" : "Pro"}</div>
                     <div className="payment-plan-info">
                       <div className="payment-plan-info-name">
                         {selectedPackage.ten_goi || selectedPackage.tieu_de}

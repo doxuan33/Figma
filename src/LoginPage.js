@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePlusG, faFacebookF, faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
@@ -36,7 +35,6 @@ class ErrorBoundary extends React.Component {
 }
 
 const LoginPage = ({ onLoginSuccess }) => {
-  const navigate = useNavigate();
   const toast = useRef(null);
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
