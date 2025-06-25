@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Route, Routes, useLocation, useNavigate, Link } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate, Link, Navigate } from "react-router-dom";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { Button } from "primereact/button";
 import HomePage from "./HomePage";
@@ -32,6 +32,12 @@ const mockUser = {
   id: "82815496",
   ten: "Nguyễn Văn A",
   thoi_gian_het_han_hoi_vien: "2025-12-31T23:59:59Z",
+};
+
+// PrivateRoute component
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
 };
 
 function App() {
@@ -136,12 +142,6 @@ function App() {
     }
   };
 
-  // Xóa handleCategoryChange không sử dụng
-  // const handleCategoryChange = (e) => {
-  //   setSelectedCategory(e.value);
-  //   setSearchQuery("");
-  // };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
@@ -245,7 +245,7 @@ function App() {
                       </div>
                       <div style={{ margin: "10px 0" }}>
                         <img
-                          src="/img/avatar.png"
+                          src="https://png.pngtree.com/png-clipart/20200701/original/pngtree-cat-default-avatar-png-image_5416936.jpg"
                           alt="Avatar"
                           style={{ borderRadius: "50%", width: "50px", height: "50px", cursor: "pointer" }}
                           loading="lazy"
@@ -446,10 +446,31 @@ function App() {
         <Route path="/ppt" element={<PptPage />} />
         <Route path="/png" element={<PngPage />} />
         <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute>
+              <UserPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vip"
+          element={
+            <PrivateRoute>
+              <VIPPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/checkout/:packageId"
+          element={
+            <PrivateRoute>
+              <VIPcheckPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="/ai" element={<AIPage />} />
-        <Route path="/vip" element={<VIPPage />} />
-        <Route path="/checkout/:packageId" element={<VIPcheckPage />} />
         <Route path="/success" element={<Success />} />
       </Routes>
 

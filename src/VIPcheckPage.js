@@ -280,14 +280,14 @@ const VIPcheckPage = () => {
                       <img
                         src={
                           method === "method-1"
-                            ? "/images/momo.png"
+                            ? "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square-350x350.png"
                             : method === "method-2"
-                            ? "/images/visa.png"
+                            ? "https://js.pngtree.com/a5/static/li67rm.CR2j1tzS.png"
                             : method === "method-3"
-                            ? "/images/paypal.png"
+                            ? "/img/paypal.png"
                             : method === "method-4"
-                            ? "/images/google_pay.png"
-                            : "/images/bank_transfer.png"
+                            ? "https://static.vecteezy.com/system/resources/thumbnails/050/592/389/small_2x/google-pay-logo-transparent-background-free-png.png"
+                            : "https://js.pngtree.com/web3/images/ps_logos/pm_banktransfervn.png"
                         }
                         alt={paymentMethodMap[method]}
                         className="payment-method-icon"
@@ -382,7 +382,7 @@ const VIPcheckPage = () => {
                     checked={agreeAutoRenew}
                     onChange={(e) => setAgreeAutoRenew(e.target.checked)}
                   />
-                  <span>Xem và đồng ý với "Thỏa thuận Gia hạn Thẻ Tín dụng/Tự động"</span>
+                  <span>Xem và đồng ý với Thỏa thuận Gia hạn Thẻ Tín dụng/Tự động</span>
                 </label>
                 <label className="payment-checkbox">
                   <input
