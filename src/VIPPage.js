@@ -5,7 +5,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./VIPPage.css";
 
-// Mock data for membership packages
 const mockPackages = [
   {
     id: 1,
@@ -30,22 +29,34 @@ const mockPackages = [
 const VIPPage = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Mock data loading
   useEffect(() => {
     try {
+      if (!mockPackages || !Array.isArray(mockPackages)) {
+        throw new Error("Dữ liệu gói không hợp lệ");
+      }
       setPackages(mockPackages);
       setLoading(false);
     } catch (err) {
       console.error("Error loading packages:", err);
+      setError("Không thể tải danh sách gói. Vui lòng thử lại sau.");
       setLoading(false);
     }
   }, []);
 
   const handleBuyNow = (pkg) => {
+    if (!pkg?.id) {
+      console.error("Invalid package:", pkg);
+      return;
+    }
     navigate(`/checkout/${pkg.id}`, { state: { selectedPackage: pkg } });
   };
+
+  if (error) {
+    return <div className="text-center mt-10 text-red-500">Lỗi: {error}</div>;
+  }
 
   if (loading) {
     return <div className="text-center mt-10 text-gray-700">Đang tải...</div>;
@@ -53,17 +64,17 @@ const VIPPage = () => {
 
   const blogs = [
     {
-      img: "https://js.pngtree.com/a4/static/1gtrjrq.a76fff00.png",
+      img: "/img/blog1.png", // Use local assets
       alt: "Blog 1",
       description: "Đội ngũ thiết kế độc quyền đông đảo",
     },
     {
-      img: "https://js.pngtree.com/a4/static/iqtcld.153b81b2.png",
+      img: "/img/blog2.png",
       alt: "Blog 2",
       description: "Hiệp định PRF cho giấy phép thương mại",
     },
     {
-      img: "https://js.pngtree.com/a4/static/gjckia.325a0204.png",
+      img: "/img/blog3.png",
       alt: "Blog 3",
       description: "Tải xuống không giới hạn tài nguyên hình ảnh đa thể loại",
     },
@@ -110,7 +121,6 @@ const VIPPage = () => {
           </div>
         ))}
       </div>
-      {/* Blogs Section */}
       <section className="container blogs">
         <h1 className="heading-1">
           Hàng chục triệu người dùng đã tham gia Gói Premium Cá nhân của chúng tôi

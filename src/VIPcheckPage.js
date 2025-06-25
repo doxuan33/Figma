@@ -5,14 +5,12 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./VIPPage.css";
 
-// Mock data for user
 const mockUser = {
   id: 1,
   email: "user@example.com",
   so_dien_thoai: "0123456789",
 };
 
-// Mock data for packages
 const mockPackages = {
   1: {
     id: 1,
@@ -70,13 +68,11 @@ const VIPcheckPage = () => {
     "method-5": "bank_transfer",
   };
 
-  // Clear localStorage order data
   useEffect(() => {
     localStorage.removeItem("lastOrderId");
     localStorage.removeItem("lastOrderDetails");
   }, []);
 
-  // Mock user data
   useEffect(() => {
     try {
       setUser(mockUser);
@@ -89,7 +85,6 @@ const VIPcheckPage = () => {
     }
   }, []);
 
-  // Mock package data
   useEffect(() => {
     if (!initialSelectedPackage && packageId) {
       try {
@@ -106,6 +101,9 @@ const VIPcheckPage = () => {
         setError("Không thể tải thông tin gói/tài nguyên.");
         setLoadingPackage(false);
       }
+    } else if (!initialSelectedPackage && !packageId) {
+      setError("Không có thông tin gói/tài nguyên!");
+      setLoadingPackage(false);
     } else {
       setLoadingPackage(false);
     }
@@ -151,7 +149,6 @@ const VIPcheckPage = () => {
 
       const orderId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-      // Store order details in localStorage for SuccessPage
       localStorage.setItem("lastOrderId", orderId);
       localStorage.setItem(
         "lastOrderDetails",
@@ -165,7 +162,6 @@ const VIPcheckPage = () => {
         })
       );
 
-      // Simulate payment processing
       const simulatePayment = (delay) =>
         new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -280,19 +276,19 @@ const VIPcheckPage = () => {
                       <img
                         src={
                           method === "method-1"
-                            ? "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square-350x350.png"
+                            ? "/img/momo.png"
                             : method === "method-2"
-                            ? "https://js.pngtree.com/a5/static/li67rm.CR2j1tzS.png"
+                            ? "/img/visa.png"
                             : method === "method-3"
                             ? "/img/paypal.png"
                             : method === "method-4"
-                            ? "https://static.vecteezy.com/system/resources/thumbnails/050/592/389/small_2x/google-pay-logo-transparent-background-free-png.png"
-                            : "https://js.pngtree.com/web3/images/ps_logos/pm_banktransfervn.png"
+                            ? "/img/google-pay.png"
+                            : "/img/bank-transfer.png"
                         }
                         alt={paymentMethodMap[method]}
                         className="payment-method-icon"
                         loading="lazy"
-                        onError={(e) => (e.target.src = "/images/fallback-payment.png")}
+                        onError={(e) => (e.target.src = "/img/fallback-payment.png")}
                       />
                     </label>
                   </React.Fragment>
